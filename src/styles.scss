@@ -1,0 +1,35 @@
+@import '../node_modules/@angular/material/_theming.scss';
+@import url('//fonts.googleapis.com/icon?family=Material+Icons');
+@import 'colors.scss';
+
+@include mat-core();
+
+$primary : mat-palette($mat-lime, 500);
+$accent  : mat-palette($mat-lime, 500, A200, A400);
+$warn    : mat-palette($mat-red, 500);
+$theme   : mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
+body {
+    font-family: $mat-font-family;
+    font-weight: normal;
+    background: url('assets/img/bg/sanlu_bg_4.jpg') no-repeat center center fixed;
+    transition: background 300ms ease-in-out 200ms;
+    background-size: cover;
+    color: $black;
+    height: 90vh;
+}
+
+h1, h2, h3, h4 {
+    font-weight: bold;
+}
+
+$maxBg : 6;
+
+// Background classes
+@for $i from 1 through $maxBg {
+    .sanlu-bg-#{$i} {
+        background-image: url('/assets/img/bg/sanlu_bg_' + $i + '.jpg');
+    }
+}

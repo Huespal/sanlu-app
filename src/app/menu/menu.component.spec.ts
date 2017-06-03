@@ -1,18 +1,18 @@
 import { TestBed, async } from '@angular/core/testing';
 
-import { AppComponent } from './app.component';
+import { MenuComponent } from './menu.component';
 
-describe('AppComponent', () => {
+describe('MenuComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        MenuComponent
       ],
     }).compileComponents();
   }));
 
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it('should create the menu', async(() => {
+    const fixture = TestBed.createComponent(MenuComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
