@@ -1,13 +1,20 @@
-<img src="../../assets/img/face/{{faceClass}}.jpg" class="menu-img" (click)="changeFace()"/>
-<!-- TODO: Menu circular --> <!-- Here: http://zikes.github.io/circle-menu/ -->
-<md-nav-list>
-    <md-list-item>
-        <span translate="MENU.WHO" (click)="changeState(1);"></span>
+<div class="menu-img">
+    <img src="../../assets/img/face/{{faceClass}}.jpg" (click)="onFace()"/>
+</div>
+<md-nav-list [@visibilityChanged]="openMenu">
+    <md-list-item [routerLink]="['/app/who']">
+        <span translate="MENU.WHO"></span>
+    </md-list-item>
+    <md-list-item [routerLink]="['/app/what']">
+        <span translate="MENU.WHAT"></span>
+    </md-list-item>
+    <md-list-item [routerLink]="['/app/why']">
+        <span translate="MENU.WHY"></span>
+    </md-list-item>
+    <md-list-item [routerLink]="['/app/where']">
+        <span translate="MENU.WHERE"></span>
     </md-list-item>
     <md-list-item>
-        <span translate="MENU.WHAT" (click)="changeState(2);"></span>
-    </md-list-item>
-    <md-list-item>
-        <span translate="MENU.WHERE" (click)="changeState(3);"></span>
+        <span translate="MENU.DB_CARDS" [routerLink]="['/dbcards']"></span>
     </md-list-item>
 </md-nav-list>

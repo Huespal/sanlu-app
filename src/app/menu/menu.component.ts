@@ -1,10 +1,19 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  animations: [
+      trigger('visibilityChanged', [
+          state('0', style({ transform: 'translateX(-100%)', height: '0', opacity: 0 })),
+          state('1', style({ transform: 'translateX(0%)', height: '100%', opacity: 1 })),
+          transition('1 => 0', animate('.3s ease-in' )),
+          transition('0 => 1', animate('.3s ease-out' ))
+  ])]
 })
+
 export class MenuComponent {
 
     /**
@@ -30,7 +39,22 @@ export class MenuComponent {
 
     /**
      * @desc
-     *  Changes app background.
+     *  Flag to define open/close menu.
+     * @type {boolean}
+     */
+    openMenu = true;
+
+    /**
+     * @desc
+     *  Opens / closes menu.
+     */
+    toggleMenu() {
+        this.openMenu = !this.openMenu;
+    }
+
+    /**
+     * @desc
+     *  Changes menu image.
      */
     changeFace() {
         this.faceClass = 'sanlu_face_' + this.faceCount;
@@ -40,28 +64,11 @@ export class MenuComponent {
 
     /**
      * @desc
-     *  Changes app background.
-     * @param {number} state
+     *  Callback on menu image click.
      */
-    changeState(state) {
-        // TODO: https://www.sitepoint.com/angular-2-components-inputs-outputs/
-        switch(state) {
-            case 1:
-                // TODO: Set app.component state to state.
-                alert('Who!');
-                break;
-            case 2:
-                // TODO: Set app.component state to state.
-                alert('What!');
-                break;
-            case 3:
-                // TODO: Set app.component state to state.
-                alert('Where!');
-                break;
-            default:
-                // TODO: Set app.component state to 1.
-                break;
-        }
+    onFace() {
+        this.changeFace();
+        this.toggleMenu();
     }
 
     constructor() { }

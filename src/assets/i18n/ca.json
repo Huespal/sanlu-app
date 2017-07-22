@@ -1,7 +1,9 @@
 {
   "MENU"  : {
-    "WHO"   : "Qui sóc?",
-    "WHAT"  : "Què faig?",
-    "WHERE" : "On sóc?"
+    "WHO"       : "Qui sóc?",
+    "WHAT"      : "Què faig?",
+    "WHY"       : "Perquè ho faig?",
+    "WHERE"     : "On sóc?",
+    "DB_CARDS"  : "Cartes Bola de drac"
   }
 }

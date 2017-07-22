@@ -1,18 +1,18 @@
 import { TestBed, async } from '@angular/core/testing';
 
-import { WhyComponent } from './why.component';
+import { WhoComponent } from './who.component';
 
-describe('WhyComponent', () => {
+describe('WhoComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        WhyComponent
+        WhoComponent
       ],
     }).compileComponents();
   }));
 
-  it('should create the why', async(() => {
-    const fixture = TestBed.createComponent(WhyComponent);
+  it('should create the who', async(() => {
+    const fixture = TestBed.createComponent(WhoComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));

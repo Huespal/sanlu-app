@@ -1,18 +1,18 @@
 import { TestBed, async } from '@angular/core/testing';
 
-import { WhyComponent } from './why.component';
+import { DbCardsComponent } from './dbcards.component';
 
-describe('WhyComponent', () => {
+describe('DbCardsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        WhyComponent
+        DbCardsComponent
       ],
     }).compileComponents();
   }));
 
-  it('should create the why', async(() => {
-    const fixture = TestBed.createComponent(WhyComponent);
+  it('should create the dbcards', async(() => {
+    const fixture = TestBed.createComponent(DbCardsComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));

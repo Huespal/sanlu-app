@@ -1,10 +1,10 @@
-import { SanluAppPage } from './app.po';
+import { SanlusAppPage } from './app.po';
 
-describe('sanlu-app App', () => {
-  let page: SanluAppPage;
+describe('sanlus-app App', () => {
+  let page: SanlusAppPage;
 
   beforeEach(() => {
-    page = new SanluAppPage();
+    page = new SanlusAppPage();
   });
 
   it('should display message saying app works', () => {

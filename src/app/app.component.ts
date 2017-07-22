@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -28,16 +28,6 @@ export class AppComponent implements OnInit {
      * @type {number}
      */
     interval    = 1000 * 60 * 30;
-
-    /**
-     * @desc
-     *  Current state.
-     *  - 1 : What
-     *  - 2 : Why
-     *  - 3 : Whhere
-     * @type {number}
-     */
-    state       = 1;
 
     /**
      * @desc

@@ -1,18 +1,18 @@
 import { TestBed, async } from '@angular/core/testing';
 
-import { WhyComponent } from './why.component';
+import { WhereComponent } from './where.component';
 
-describe('WhyComponent', () => {
+describe('WhereComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        WhyComponent
+        WhereComponent
       ],
     }).compileComponents();
   }));
 
-  it('should create the why', async(() => {
-    const fixture = TestBed.createComponent(WhyComponent);
+  it('should create the where', async(() => {
+    const fixture = TestBed.createComponent(WhereComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));

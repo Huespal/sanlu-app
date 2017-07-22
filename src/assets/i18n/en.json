@@ -1,7 +1,9 @@
 {
   "MENU"  : {
-    "WHO"   : "Who I am?",
-    "WHAT"  : "What I do?",
-    "WHERE" : "Where I am?"
+    "WHO"       : "Who I am?",
+    "WHAT"      : "What I do?",
+    "WHY"       : "Why I do?",
+    "WHERE"     : "Where I am?",
+    "DB_CARDS"  : "Dragon Ball Cards"
   }
 }

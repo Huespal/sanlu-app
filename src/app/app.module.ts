@@ -1,15 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RoutesModule } from './routes.module';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCheckboxModule, MdListModule, MdInputModule, MdSelectModule, MdIconModule  } from '@angular/material';
+import { MdButtonModule, MdCheckboxModule, MdListModule, MdInputModule,
+         MdSelectModule, MdIconModule, MdCardModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
+import { WhoComponent } from './who/who.component';
+import { WhatComponent } from './what/what.component';
+import { WhereComponent } from './where/where.component';
 import { WhyComponent } from './why/why.component';
+import { DbCardsComponent } from './dbcards/dbcards.component';
 import 'hammerjs';
 
 // AoT requires an exported function for factories
@@ -21,7 +27,11 @@ export function HttpLoaderFactory(http: Http) {
   declarations: [
     AppComponent,
     MenuComponent,
-    WhyComponent
+    WhoComponent,
+    WhatComponent,
+    WhereComponent,
+    WhyComponent,
+    DbCardsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,8 +42,10 @@ export function HttpLoaderFactory(http: Http) {
           deps: [Http]
       }
     }),
+    RoutesModule,
     BrowserAnimationsModule,
     MdButtonModule,
+    MdCardModule,
     MdListModule,
     MdCheckboxModule,
     MdInputModule,

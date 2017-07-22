@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "sanlu-app"
+    "name": "sanlus-app"
   },
   "apps": [
     {
@@ -51,8 +51,7 @@
     }
   },
   "defaults": {
-    "styleExt": "scss",
-    "component": {
-    }
+    "styleExt": "css",
+    "component": {}
   }
 }

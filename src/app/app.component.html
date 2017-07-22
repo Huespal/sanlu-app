@@ -1,12 +1,8 @@
 <div class="flex-container"
      fxLayout="row"
+     fxLayoutAlign="start start"
      fxLayout.xs="column"
-     fxLayoutAlign="space-around center"
-     fxLayoutAlign.xs="start">
-    <app-menu></app-menu>
-    <app-why *ngIf="state === 1"></app-why>
-    <div *ngIf="state === 2">Where</div>
-    <div *ngIf="state === 3">What</div>
-    <!--<app-what *ng-if=""></app-what>-->
-    <!--<app-where *ng-if=""></app-where>-->
+     fxLayoutAlign.xs="start start">
+        <app-menu class="flex-item" fxFlex="15%"></app-menu>
+        <router-outlet class="right-element"></router-outlet>
 </div>

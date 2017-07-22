@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor';
 
-export class SanluAppPage {
+export class SanlusAppPage {
   navigateTo() {
     return browser.get('/');
   }
