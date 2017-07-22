@@ -1,0 +1,40 @@
+@import '../../../colors.scss';
+
+md-card {
+  transition: transform .5s ease-in-out;
+  max-width: 200px;
+  user-select: none;
+  cursor: default;
+  .energy-icon {
+    color: $gold;
+  }
+  .card-img {
+    width: 100%;
+    height: 100%;
+  }
+  &:hover {
+    @extend .selected;
+  }
+  button {
+    background-color: transparent;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    outline: none;
+    span:first-child {
+      text-align: left;
+    }
+    span:last-child {
+      text-align: right;
+    }
+    &:hover {
+      color: $blue;
+    }
+  }
+}
+
+.selected {
+  transform: scale(1.1);
+  animation: blue-glow 1.5s ease-in-out infinite alternate;
+}

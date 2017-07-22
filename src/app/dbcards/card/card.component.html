@@ -1,0 +1,26 @@
+<md-card>
+    <md-card-title class="flex-container"
+                   fxLayout="row"
+                   fxLayoutAlign="space-between center">
+        <strong> {{ name }} </strong>
+        <div class="flex-container"
+             fxLayout="row"
+             fxLayoutAlign="end center">
+            <i title="{{ 'DB_CARDS.ENERGY' | translate }}"  class="material-icons energy-icon">&#xE3E7;</i>
+            <div title="{{ energy }} / {{ maxEnergy }}"> {{ energy }}</div>
+        </div>
+    </md-card-title>
+    <md-card-content>
+        <img class="card-img" alt="{{ name }}" src="../../../assets/img/cards/cor_petit/cor_petit.jpg" />
+    </md-card-content>
+    <md-card-actions>
+        <button *ngFor="let attack of attacks ; index as i;"
+                (click)="onAttack(attack)"
+                class="flex-container"
+                fxLayout="row"
+                fxLayoutAlign="start start">
+            <span style="text-align: left;" class="flex-item" fxFlex="50%">{{ attack.name }}</span>
+            <span *ngIf="!!attack.damage" class="flex-item" fxFlex="50%">{{ attack.damage }}</span>
+        </button>
+    </md-card-actions>
+</md-card>

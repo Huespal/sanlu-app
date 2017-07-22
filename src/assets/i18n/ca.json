@@ -1,9 +1,15 @@
 {
-  "MENU"  : {
+  "MENU"      : {
     "WHO"       : "Qui sóc?",
     "WHAT"      : "Què faig?",
     "WHY"       : "Perquè ho faig?",
     "WHERE"     : "On sóc?",
     "DB_CARDS"  : "Cartes Bola de drac"
+  },
+  "DB_CARDS"  : {
+    "HEADER"      : "Joc de cartes de Bola de Drac",
+    "ENERGY"      : "Energia restant",
+    "CHARACTER"   : "Personatge",
+    "ATTACK_INFO" : "Fes click a un attack per activar-lo"
   }
 }

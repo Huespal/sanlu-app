@@ -5,5 +5,11 @@
     "WHY"       : "Why I do?",
     "WHERE"     : "Where I am?",
     "DB_CARDS"  : "Dragon Ball Cards"
+  },
+  "DB_CARDS"  : {
+    "HEADER"      : "Dragon Ball cards game",
+    "ENERGY"      : "Remaining energy",
+    "CHARACTER"   : "Character",
+    "ATTACK_INFO" : "Click on an attack to activate it"
   }
 }

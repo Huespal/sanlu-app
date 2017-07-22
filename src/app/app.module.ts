@@ -16,6 +16,7 @@ import { WhatComponent } from './what/what.component';
 import { WhereComponent } from './where/where.component';
 import { WhyComponent } from './why/why.component';
 import { DbCardsComponent } from './dbcards/dbcards.component';
+import { CardComponent } from './dbcards/card/card.component';
 import 'hammerjs';
 
 // AoT requires an exported function for factories
@@ -31,7 +32,8 @@ export function HttpLoaderFactory(http: Http) {
     WhatComponent,
     WhereComponent,
     WhyComponent,
-    DbCardsComponent
+    DbCardsComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
