@@ -2,25 +2,27 @@
     <md-card-title class="flex-container"
                    fxLayout="row"
                    fxLayoutAlign="space-between center">
-        <strong> {{ name }} </strong>
+        <strong> {{ character.name }} </strong>
         <div class="flex-container"
              fxLayout="row"
              fxLayoutAlign="end center">
             <i title="{{ 'DB_CARDS.ENERGY' | translate }}"  class="material-icons energy-icon">&#xE3E7;</i>
-            <div title="{{ energy }} / {{ maxEnergy }}"> {{ energy }}</div>
+            <div title="{{ character.energy }} / {{ character.maxEnergy }}"> {{ character.energy }}</div>
         </div>
     </md-card-title>
     <md-card-content>
-        <img class="card-img" alt="{{ name }}" src="../../../assets/img/cards/cor_petit/{{ picture }}.jpg" />
+        <img class="card-img" alt="{{ character.name }}" src="../../../assets/img/cards/{{ character.picture }}.jpg" />
     </md-card-content>
-    <md-card-actions [ngClass]="{'dbz-bg': type === cardTypes.Z, 'dbgt-bg': type === cardTypes.GT, 'db-bg': type === cardTypes.DB}">
-        <button *ngFor="let attack of attacks ; index as i;"
+    <md-card-actions [ngClass]="{'dbz-bg': character.type === cardTypes.Z,
+                                 'dbgt-bg': character.type === cardTypes.GT,
+                                 'db-bg': character.type === cardTypes.DB}">
+        <button *ngFor="let attack of character.attacks ; index as i;"
                 (click)="onAttack(attack)"
                 class="flex-container"
                 fxLayout="row"
                 fxLayoutAlign="start start">
-            <span style="text-align: left;" class="flex-item" fxFlex="50%">{{ attack.name }}</span>
-            <span *ngIf="!!attack.damage" class="flex-item" fxFlex="50%">{{ attack.damage }}</span>
+            <span style="text-align: left;" class="flex-item" fxFlex="75%">{{ attack.name }}</span>
+            <span *ngIf="!!attack.damage" class="flex-item" fxFlex="25%">{{ attack.damage }}</span>
         </button>
     </md-card-actions>
 </md-card>

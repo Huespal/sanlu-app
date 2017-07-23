@@ -8,6 +8,10 @@ let Schema      = mongoose.Schema,
             type: String,
             Required: 'Enter card name'
         },
+        type: {
+            type: Number,
+            Required: 'Enter card type (DB, Z, GT)'
+        },
         picture: {
             type: String,
             Required: 'Enter card picture url'

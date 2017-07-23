@@ -3,3 +3,7 @@ export const cardTypes = {
     Z   : 1,
     GT  : 2
 };
+export const cardStatus = {
+    alive   : 0,
+    dead    : 1
+};

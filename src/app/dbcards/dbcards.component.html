@@ -2,4 +2,8 @@
 
 <button md-button (click)="onStart()"> Start game! </button>
 
-<app-card></app-card>
+<div class="flex-container"
+         fxLayout="row"
+         fxLayoutAlign="start start">
+    <app-card *ngFor="let character of characters; index as i;" [character]="character" class="card"></app-card>
+</div>
