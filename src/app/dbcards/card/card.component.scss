@@ -16,21 +16,24 @@ md-card {
     @extend .selected;
   }
   button {
-    background-color: transparent;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    width: 100%;
-    outline: none;
-    span:first-child {
-      text-align: left;
+      background-color: transparent;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      width: 100%;
+      outline: none;
+      span:first-child {
+        text-align: left;
+      }
+      span:last-child {
+        text-align: right;
+      }
+      &:hover {
+        color: $blue;
+      }
     }
-    span:last-child {
-      text-align: right;
-    }
-    &:hover {
-      color: $blue;
-    }
+  .dbz-bg {
+    background: url('../../../assets/img/cards/common/card-bg-z.png') 50% no-repeat;
   }
 }
 

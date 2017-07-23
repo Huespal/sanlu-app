@@ -30,6 +30,13 @@ export class CardComponent {
 
     /**
      * @desc
+     *  Picture name.
+     * @type {string}
+     */
+    picture     = 'cor_petit';
+
+    /**
+     * @desc
      *  Character attacks.
      * @type {Array}
      */

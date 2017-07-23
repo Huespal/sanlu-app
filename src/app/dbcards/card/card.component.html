@@ -11,9 +11,10 @@
         </div>
     </md-card-title>
     <md-card-content>
-        <img class="card-img" alt="{{ name }}" src="../../../assets/img/cards/cor_petit/cor_petit.jpg" />
+        <img class="card-img" alt="{{ name }}" src="../../../assets/img/cards/cor_petit/{{ picture }}.jpg" />
     </md-card-content>
-    <md-card-actions>
+    <!-- TODO: ng class -->
+    <md-card-actions class="dbz-bg">
         <button *ngFor="let attack of attacks ; index as i;"
                 (click)="onAttack(attack)"
                 class="flex-container"
