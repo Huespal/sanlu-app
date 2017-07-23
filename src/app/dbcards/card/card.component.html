@@ -13,8 +13,7 @@
     <md-card-content>
         <img class="card-img" alt="{{ name }}" src="../../../assets/img/cards/cor_petit/{{ picture }}.jpg" />
     </md-card-content>
-    <!-- TODO: ng class -->
-    <md-card-actions class="dbz-bg">
+    <md-card-actions [ngClass]="{'dbz-bg': type === cardTypes.Z, 'dbgt-bg': type === cardTypes.GT, 'db-bg': type === cardTypes.DB}">
         <button *ngFor="let attack of attacks ; index as i;"
                 (click)="onAttack(attack)"
                 class="flex-container"

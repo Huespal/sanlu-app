@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { cardTypes } from '../dbz-constants';
 
 @Component({
   selector: 'app-card',
@@ -6,6 +7,13 @@ import {Component} from '@angular/core';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent {
+
+    /**
+     * @desc
+     *  Card types.
+     * @type {Object}
+     */
+    cardTypes   = cardTypes;
 
     /**
      * @desc
@@ -34,6 +42,13 @@ export class CardComponent {
      * @type {string}
      */
     picture     = 'cor_petit';
+
+    /**
+     * @desc
+     *  Series type (DB, Z or GT).
+     * @type {string}
+     */
+    type        = 1;
 
     /**
      * @desc
