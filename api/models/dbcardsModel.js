@@ -10,7 +10,8 @@ let Schema      = mongoose.Schema,
         },
         type: {
             type: Number,
-            Required: 'Enter card type (DB, Z, GT)'
+            enum: [0, 1],
+            default: [0]
         },
         picture: {
             type: String,
@@ -25,22 +26,13 @@ let Schema      = mongoose.Schema,
             Required: 'Enter card max energy'
         },
         attacks: {
-            type: [
-                {
-                    type: String,
-                    enum: ['Attack 1', 'Attack 2', 'Attack 3']
-                }
-            ],
+            type: Array,
             Required: 'Enter card attacks'
         },
         status: {
-            type: [
-                {
-                    type: String,
-                    enum: ['dead', 'alive']
-                }
-            ],
-            default: ['alive']
+            type: Number,
+            enum: [0, 1],
+            default: [0]
         },
         created_at: {
             type: Date,

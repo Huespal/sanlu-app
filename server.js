@@ -4,41 +4,64 @@ import mongoose from 'mongoose';
 import express from 'express';
 import bodyParser from 'body-parser';
 import * as model from './api/models/dbcardsModel';
-let cards = require('./api/routes/dbcardsRoutes');
-
-let app     = express(),
+let cards   = require('./api/routes/dbcardsRoutes'),
+    app     = express(),
     port    = process.env.PORT || 3000;
 
+app.set('port', port);
+
+// Mongoose connect.
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://sanlu:#sanlu@ds141232.mlab.com:41232/dbzcards');
 
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    // we're connected!
-    console.log(`Awesome Sanlu server started on: ${port}`);
-});
-
-// Set Static Folder
+// Set static folder (frontend main (index) page)
 // import path from 'path';
 // app.use(express.static(path.join(__dirname, 'src')));
 
-// Body Parser MW
+// Body Parser middleware.
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 
-// 404.
+// Add headers
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
+// Routing: home
+app.get('/', (req, res) => {
+    res.send('Welcome to Awesome Sanlu server API main page.');
+});
+
+// Routing: Cards
+cards(app);
+
+// Routing: 404.
 app.use((req, res) => {
     res.status(404).send({url: `${req.originalUrl} not found`});
 });
 
-// API Routing
-// let index = require('./api/routes/indexRoutes');
-// app.use('', index);
-app.use('/api', cards);
+// Listen
+app.listen(app.get('port'), () => {
+    console.log(`Awesome Sanlu server started on: ${port}`);
+});
 
-app.listen(port);
 
+// Notes:
 // To start mongodb service: net start mongodb
 // To open mongod (if service not working): mongod --config="c:\Program Files\MongoDB\Server\3.4\mongod.cfg"
 // To stop mongodb service: net stop mongodb

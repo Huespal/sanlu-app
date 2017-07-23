@@ -12,7 +12,7 @@ export class DbCardsService {
     getCards() {
         return this.http.get(`${this.devServerPath}/cards`)
             .toPromise()
-            .then(response => response.json().data)
+            .then(response => {return response.json(); })
             .catch((error) => Promise.reject(error.message || error));
     }
 

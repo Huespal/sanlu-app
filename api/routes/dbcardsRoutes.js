@@ -1,22 +1,19 @@
 'use strict';
 
-let db_cards = require('../controllers/dbcardsController');
-import express from 'express';
-let router = express.Router();
+let cards = require('../controllers/dbcardsController');
 
-// GET cards.
-router.get('/cards', db_cards.get_all_cards);
+module.exports = (app) => {
+    // GET cards.
+    // POST card.
+    app.route('/api/cards')
+        .get(cards.get_all_cards)
+        .post(cards.create_card);
 
-// POST card.
-router.post('/cards', db_cards.create_card);
-
-// GET card.
-router.get('/cards/:id', db_cards.get_card);
-
-// PUT card.
-router.put('/cards/:id', db_cards.modify_card);
-
-// DELETE card.
-router.delete('/cards/:id', db_cards.delete_card);
-
-module.exports = router;
+    // GET card.
+    // PUT card.
+    // DELETE card.
+    app.route('/api/cards/:id')
+        .get(cards.get_card)
+        .put(cards.modify_card)
+        .delete(cards.delete_card);
+};
