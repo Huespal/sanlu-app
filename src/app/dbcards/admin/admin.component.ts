@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Character } from '../card/character';
 import { DbCardsService } from '../dbcards.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { cardTypes, cardStatus } from '../dbz-constants';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmService } from '../../confirm/confirm.service';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'app-admin',
-  providers: [DbCardsService],
+  providers: [ConfirmService, DbCardsService],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
@@ -25,6 +28,20 @@ export class AdminComponent implements OnInit {
      * @type {Array}
      */
     characters      = [];
+
+    /**
+     * @desc
+     *  Card types.
+     * @type {Object}
+     */
+    cardTypes      = cardTypes;
+
+    /**
+     * @desc
+     *  Card status.
+     * @type {Object}
+     */
+    cardStatus      = cardStatus;
 
     /**
      * @desc
@@ -53,13 +70,15 @@ export class AdminComponent implements OnInit {
      * @type {FormGroup}
      */
     cardForm        =  this.fb.group({
-        cardName: ['', Validators.required],
-        cardPicture: ['', Validators.required],
-        cardAttack1: ['', Validators.required],
-        cardAttack2: ['', Validators.required],
-        cardAttack3: ['', Validators.required],
-        hasExtraAttack: [false, null],
-        cardAttackExtra: ['', null]
+        cardName        : ['', Validators.required],
+        cardPicture     : ['', Validators.required],
+        cardType        : [this.cardTypes.Z, Validators.required],
+        cardEnergy      : [1000, Validators.required],
+        cardAttack1     : ['', Validators.required],
+        cardAttack2     : ['', Validators.required],
+        cardAttack3     : ['', Validators.required],
+        hasExtraAttack  : [false, null],
+        cardAttackExtra : ['', null]
     });
 
     /**
@@ -80,7 +99,7 @@ export class AdminComponent implements OnInit {
      */
     onSubmitForm() {
         if (this.isCreating) {this.createCard();
-        } else if (this.isEditing) {this.editCard(); }
+        } else if (this.isEditing) {this.editCard(this.currentCard['_id']); }
     }
 
     /**
@@ -101,22 +120,113 @@ export class AdminComponent implements OnInit {
 
     /**
      * @desc
+     *  Resets and hides extra attack input.
+     */
+    onCancelExtraAttack() {
+        this.cardForm.get('hasExtraAttack').setValue(false);
+        this.cardForm.get('cardAttackExtra').setValue('');
+    }
+
+    /**
+     * @desc
      *  Creates a card. Sends information to server to create a card.
      */
     createCard() {
-        console.log(`Card name: ${this.cardForm.controls.cardName.value}`);
-        console.log(`Card picture: ${this.cardForm.controls.cardPicture.value}`);
 
-
-        console.warn(`TODO: create card with ${this.currentCard}`);
+        this.dbcardsService.createCard(this.prepareCardData())
+            .then(() => {this.getCards(); })
+            .catch((err) => { console.error(err); });
     }
 
     /**
      * @desc
      *  Edits a card. Sends information to server to edit a card.
      */
-    editCard() {
-        console.warn(`TODO: edit a card with ${this.currentCard} information`);
+    editCard(cardId) {
+        this.dbcardsService.editCard(cardId, this.prepareCardData())
+            .then(() => {this.getCards(); })
+            .catch((err) => { console.error(err); });
+    }
+
+    prepareCardData() {
+        const formControls  = this.cardForm.controls,
+              data          = {
+                    name        : formControls.cardName.value,
+                    type        : formControls.cardType.value,
+                    energy      : formControls.cardEnergy.value,
+                    maxEnergy   : formControls.cardEnergy.value,
+                    picture     : formControls.cardPicture.value,
+                    status      : this.cardStatus.alive,
+                    attacks     : [
+                        {
+                            name    : formControls.cardAttack1.value,
+                            damage  : this.attackDamage1()
+                        },
+                        {
+                            name    : formControls.cardAttack2.value,
+                            damage  : this.attackDamage2()
+                        },
+                        {
+                            name    : formControls.cardAttack3.value,
+                            damage  : this.attackDamage3()
+                        }
+                    ]
+              };
+
+        if (formControls.hasExtraAttack.value) {
+
+            data.attacks.push({
+                name    : formControls.cardAttack2.value,
+                damage  : this.attackDamageExtra()
+            });
+        }
+
+        debugger;
+        return data;
+    }
+
+    /**
+     * Calculates damage for attack 1.
+     * @returns {number}
+     */
+    attackDamage1() {
+
+        // TODO: Calculate damage for attack 1 with energy.
+        // this.cardForm.controls.cardEnergy.value
+        return 10;
+    }
+
+    /**
+     * Calculates damage for attack 2.
+     * @returns {number}
+     */
+    attackDamage2() {
+
+        // TODO: Calculate damage for attack 2 with energy.
+        // this.cardForm.controls.cardEnergy.value
+        return 10;
+    }
+
+    /**
+     * Calculates damage for attack 3.
+     * @returns {number}
+     */
+    attackDamage3() {
+
+        // TODO: Calculate damage for attack 3 with energy.
+        // this.cardForm.controls.cardEnergy.value
+        return 10;
+    }
+
+    /**
+     * Calculates damage for attack extra.
+     * @returns {number}
+     */
+    attackDamageExtra() {
+
+        // TODO: Calculate damage for attack extra with energy.
+        // this.cardForm.controls.cardEnergy.value
+        return 10;
     }
 
     /**
@@ -131,6 +241,46 @@ export class AdminComponent implements OnInit {
 
     /**
      * @desc
+     *  Gets card id from card component and stores it.
+     * @param {Object} e - The event object.
+     */
+    handleCardEvent(e) {
+        this.currentCard = e.character;
+        if (e.remove) {this.deleteCard();
+        } else { this.isEditing = true; }
+    }
+
+    /**
+     * @desc
+     *  Deletes card.
+     */
+    deleteCard() {
+        this.confirmService
+            .confirm(this.translateService.instant('ADMIN.DELETE'),
+                this.translateService.instant('DIALOG.MSG_DELETE', {name: this.currentCard.name}),
+                this.translateService.instant('DIALOG.OK'))
+            .subscribe(confirm => {
+
+                if (confirm) {
+                    this.dbcardsService.deleteCard(this.currentCard['_id'])
+                        .then((r) => {
+
+                            this.characters.forEach((x, i) => {
+                                if (x._id === this.currentCard['_id']) {
+                                    this.characters.splice(i, 1);
+                                }
+                            });
+                            this.charactersList = this.characters;
+                            this.searchForm.get('searchInput').setValue('');
+
+                        })
+                        .catch((err) => { console.error(err); });
+                }
+            });
+    }
+
+    /**
+     * @desc
      *  On init class.
      *  - Get cards.
      */
@@ -138,5 +288,6 @@ export class AdminComponent implements OnInit {
         this.getCards();
     }
 
-    constructor(public fb: FormBuilder, private dbcardsService: DbCardsService) { }
+    constructor(public fb: FormBuilder, private dbcardsService: DbCardsService,
+                private confirmService: ConfirmService, private translateService: TranslateService) { }
 }

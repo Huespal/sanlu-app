@@ -20,16 +20,16 @@
     <md-card-content>
         <img class="card-img" alt="{{ character.name }}" src="../../../assets/img/cards/{{ character.picture }}.jpg" />
     </md-card-content>
-    <md-card-actions [ngClass]="{'dbz-bg': character.type === cardTypes.Z,
+    <md-card-actions [ngClass]="{'dbz-bg' : character.type === cardTypes.Z,
                                  'dbgt-bg': character.type === cardTypes.GT,
-                                 'db-bg': character.type === cardTypes.DB}">
+                                 'db-bg'  : character.type === cardTypes.DB}">
         <button *ngFor="let attack of character.attacks ; index as i;"
                 (click)="onAttack(attack)"
                 class="flex-container"
                 fxLayout="row"
                 fxLayoutAlign="start start">
             <span style="text-align: left;" class="flex-item" fxFlex="75%">{{ attack.name }}</span>
-            <span *ngIf="!!attack.damage" class="flex-item" fxFlex="25%">{{ attack.damage }}</span>
+            <span class="flex-item" fxFlex="25%">{{ attack.damage }}</span>
         </button>
     </md-card-actions>
 </md-card>

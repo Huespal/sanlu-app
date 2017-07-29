@@ -13,10 +13,23 @@
                mdInput min="2"/>
     </md-input-container>
 
+    <!-- Type -->
+    <md-select formControlName="cardType" placeholder="{{ 'ADMIN.SERIES' | translate }}">
+        <md-option [value]="cardTypes.DB">{{ 'ADMIN.DB' | translate }}</md-option>
+        <md-option [value]="cardTypes.Z ">{{ 'ADMIN.Z' | translate }}</md-option>
+        <md-option [value]="cardTypes.GT">{{ 'ADMIN.GT' | translate }}</md-option>
+    </md-select>
+
     <!-- Picture -->
     <md-input-container>
         <label for="card-picture" translate="ADMIN.PICTURE"></label>
         <input id="card-picture" formControlName="cardPicture" mdInput/>
+    </md-input-container>
+
+    <!-- Energy -->
+    <md-input-container>
+        <label for="card-energy" translate="ADMIN.ENERGY"></label>
+        <input id="card-energy" min="0" type="number" formControlName="cardEnergy" mdInput/>
     </md-input-container>
 
     <!-- Attack 1 -->
@@ -38,13 +51,14 @@
     </md-input-container>
 
     <!-- Has extra attack checkbox -->
-    <md-checkbox formControlName="hasExtraAttack">{{ 'ADMIN.ATTACK' | translate }}  {{ 'ADMIN.EXTRA' | translate | lowercase }}</md-checkbox>
+    <md-checkbox *ngIf="!cardForm.controls.hasExtraAttack.value" formControlName="hasExtraAttack">{{ 'ADMIN.ATTACK' | translate }}  {{ 'ADMIN.EXTRA' | translate | lowercase }}</md-checkbox>
 
     <!-- Extra Attack -->
     <md-input-container *ngIf="cardForm.controls.hasExtraAttack.value">
         <label for="card-attack-extra">{{ 'ADMIN.ATTACK' | translate }} {{ 'ADMIN.EXTRA' | translate | lowercase }}</label>
         <input id="card-attack-extra" formControlName="cardAttackExtra" mdInput/>
     </md-input-container>
+    <button *ngIf="cardForm.controls.hasExtraAttack.value" md-icon-button (click)="onCancelExtraAttack()"><i class="material-icons">&#xE5CD;</i></button>
 
     <!-- Creating controls -->
     <div *ngIf="isCreating"
@@ -82,5 +96,5 @@
 <div class="flex-container"
      fxLayout="row"
      fxLayoutAlign="start start">
-    <app-card *ngFor="let character of charactersList; index as i;" [character]="character" [isAdmin]="true" class="card"></app-card>
+    <app-card *ngFor="let character of charactersList; index as i;" [character]="character" [isAdmin]="true" (cardEvent)="handleCardEvent($event)" class="card"></app-card>
 </div>

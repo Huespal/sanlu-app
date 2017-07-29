@@ -24,5 +24,21 @@ export class DbCardsService {
             .catch((error) => Promise.reject(error.message || error));
     }
 
+    // Create a card.
+    createCard(data) {
+        return this.http.post(`${this.devServerPath}/cards`, data)
+            .toPromise()
+            .then(response => {return response.json(); })
+            .catch((error) => Promise.reject(error.message || error));
+    }
+
+    // Edit a card.
+    editCard(id, data) {
+        return this.http.put(`${this.devServerPath}/cards/${id}`, data)
+            .toPromise()
+            .then(response => {return response.json(); })
+            .catch((error) => Promise.reject(error.message || error));
+    }
+
     constructor(private http: Http) { }
 }

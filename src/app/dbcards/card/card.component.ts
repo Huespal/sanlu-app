@@ -1,13 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { ConfirmService } from '../../confirm/confirm.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DbCardsService } from '../dbcards.service';
-import { TranslateService } from '@ngx-translate/core';
 import { Character } from './character';
 import { cardTypes } from '../dbz-constants';
 
 @Component({
   selector: 'app-card',
-  providers: [ConfirmService, DbCardsService],
+  providers: [DbCardsService],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
@@ -24,6 +22,14 @@ export class CardComponent {
      *  Flag to detect is card administration.
      */
     @Input() isAdmin: false;
+
+    /**
+     * @desc
+     *  Card event.
+     *  - Edit card.
+     *  - Update card.
+     */
+    @Output() cardEvent = new EventEmitter();
 
     /**
      * @desc
@@ -46,8 +52,8 @@ export class CardComponent {
      *  Edits card.
      */
     onEdit() {
-        console.warn(`Edit card ${this.character.name}`);
-        // TODO: Output to notify admin component to edit card.
+        console.log(`Edit card ${this.character.name}`);
+        this.cardEvent.emit({character: this.character, remove: false});
     }
 
     /**
@@ -55,25 +61,9 @@ export class CardComponent {
      *  Deletes card.
      */
     onDelete() {
-
-        this.confirmService
-            .confirm(this.translateService.instant('ADMIN.DELETE'),
-                this.translateService.instant('DIALOG.MSG_DELETE', {name: this.character.name}),
-                this.translateService.instant('DIALOG.OK'))
-            .subscribe(confirm => {
-
-                if (confirm) {
-                    this.dbcardsService.deleteCard(this.character._id)
-                        .then((r) => {
-                            debugger;
-                            console.log(r);
-                            // TODO: Delete card from list.
-                        })
-                        .catch((err) => { console.error(err); });
-                }
-            });
+        console.log(`Delete card ${this.character.name}`);
+        this.cardEvent.emit({character: this.character, remove: true});
     }
 
-    constructor(private confirmService: ConfirmService, private translateService: TranslateService,
-                private dbcardsService: DbCardsService) {}
+    constructor() {}
 }
