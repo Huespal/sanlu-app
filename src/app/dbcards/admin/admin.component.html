@@ -1,0 +1,86 @@
+<h1 translate="ADMIN.HEADER"></h1>
+
+<!-- Create card -->
+<button md-button *ngIf="!isCreating" (click)="isCreating = true">{{ 'ADMIN.NEW' | translate }}</button>
+
+<!-- Card form -->
+<form *ngIf="isCreating || isEditing" [formGroup]="cardForm" (ngSubmit)="onSubmitForm()" >
+
+    <!-- Name -->
+    <md-input-container>
+        <label for="card-name" translate="ADMIN.NAME"></label>
+        <input id="card-name" formControlName="cardName"
+               mdInput min="2"/>
+    </md-input-container>
+
+    <!-- Picture -->
+    <md-input-container>
+        <label for="card-picture" translate="ADMIN.PICTURE"></label>
+        <input id="card-picture" formControlName="cardPicture" mdInput/>
+    </md-input-container>
+
+    <!-- Attack 1 -->
+    <md-input-container>
+        <label for="card-attack-1">{{ 'ADMIN.ATTACK' | translate }} 1</label>
+        <input id="card-attack-1" formControlName="cardAttack1" mdInput/>
+    </md-input-container>
+
+    <!-- Attack 2 -->
+    <md-input-container>
+        <label for="card-attack-2">{{ 'ADMIN.ATTACK' | translate }} 2</label>
+        <input id="card-attack-2" formControlName="cardAttack2" mdInput/>
+    </md-input-container>
+
+    <!-- Attack 3 -->
+    <md-input-container>
+        <label for="card-attack-3">{{ 'ADMIN.ATTACK' | translate }} 3</label>
+        <input id="card-attack-3" formControlName="cardAttack3" mdInput/>
+    </md-input-container>
+
+    <!-- Has extra attack checkbox -->
+    <md-checkbox formControlName="hasExtraAttack">{{ 'ADMIN.ATTACK' | translate }}  {{ 'ADMIN.EXTRA' | translate | lowercase }}</md-checkbox>
+
+    <!-- Extra Attack -->
+    <md-input-container *ngIf="cardForm.controls.hasExtraAttack.value">
+        <label for="card-attack-extra">{{ 'ADMIN.ATTACK' | translate }} {{ 'ADMIN.EXTRA' | translate | lowercase }}</label>
+        <input id="card-attack-extra" formControlName="cardAttackExtra" mdInput/>
+    </md-input-container>
+
+    <!-- Creating controls -->
+    <div *ngIf="isCreating"
+         class="flex-container"
+         fxLayout="row"
+         fxLayoutAlign="end start">
+        <button md-button (click)="isCreating = false">{{ 'DIALOG.CANCEL' | translate }}</button>
+        <button md-button [disabled]="!cardForm.valid">{{ 'ADMIN.CREATE' | translate }}</button>
+    </div>
+
+    <!-- Editing controls -->
+    <div *ngIf="isEditing"
+         class="flex-container"
+         fxLayout="row"
+         fxLayoutAlign="end start">
+        <button md-button (click)="isEditing = false">{{ 'DIALOG.CANCEL' | translate }}</button>
+        <button md-button [disabled]="!cardForm.valid">{{ 'ADMIN.EDIT' | translate }}</button>
+    </div>
+</form>
+
+<!-- Search -->
+<form class="flex-container" [formGroup]="searchForm"
+      fxLayout="row"
+      fxLayoutAlign="end start">
+    <md-input-container>
+        <label for="card-search" translate="ADMIN.SEARCH"></label>
+        <input id="card-search"
+               mdInput
+               formControlName="searchInput"
+               (keyup)="onSearchCard()"/>
+    </md-input-container>
+</form>
+
+<!-- Cards list -->
+<div class="flex-container"
+     fxLayout="row"
+     fxLayoutAlign="start start">
+    <app-card *ngFor="let character of charactersList; index as i;" [character]="character" [isAdmin]="true" class="card"></app-card>
+</div>

@@ -32,7 +32,7 @@ export class DbCardsComponent {
      */
     getCards() {
         this.dbcardsService.getCards()
-            .then((r) => { debugger; this.characters = r; })
+            .then((r) => { this.characters = r; })
             .catch((err) => { console.error(err); });
     }
 

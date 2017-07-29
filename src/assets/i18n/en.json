@@ -10,6 +10,25 @@
     "HEADER"      : "Dragon Ball cards game",
     "ENERGY"      : "Remaining energy",
     "CHARACTER"   : "Character",
-    "ATTACK_INFO" : "Click on an attack to activate it"
+    "ATTACK_INFO" : "Click on an attack to activate it",
+    "PLAY"        : "Play",
+    "MANAGE"      : "Manage"
+  },
+  "ADMIN"     : {
+    "HEADER"  : "Dragon Ball Cards Administrator",
+    "NEW"     : "New card",
+    "CREATE"  : "Create card",
+    "NAME"    : "Name",
+    "PICTURE" : "Image",
+    "ATTACK"  : "Attack",
+    "EXTRA"   : "Extra",
+    "EDIT"    : "Edit card",
+    "DELETE"  : "Delete card",
+    "SEARCH"  : "Search card"
+  },
+  "DIALOG"  : {
+    "MSG_DELETE"  : "Are you sure you want to delete <strong>{{name}}</strong>",
+    "OK"          : "Ok",
+    "CANCEL"      : "Cancel"
   }
 }

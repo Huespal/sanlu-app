@@ -1,0 +1,4 @@
+<p>{{ title }}</p>
+<p [innerHTML]="message"></p>
+<button md-raised-button (click)="dialogRef.close(true)">{{ okBtn }}</button>
+<button md-button (click)="dialogRef.close()">{{ 'DIALOG.CANCEL' | translate }}</button>

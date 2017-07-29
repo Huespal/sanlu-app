@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RoutesModule } from './routes.module';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule  } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule, MdListModule, MdInputModule,
-         MdSelectModule, MdIconModule, MdCardModule } from '@angular/material';
+         MdSelectModule, MdIconModule, MdCardModule, MdDialogModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -16,7 +16,9 @@ import { WhatComponent } from './what/what.component';
 import { WhereComponent } from './where/where.component';
 import { WhyComponent } from './why/why.component';
 import { DbCardsComponent } from './dbcards/dbcards.component';
+import { AdminComponent } from './dbcards/admin/admin.component';
 import { CardComponent } from './dbcards/card/card.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 import 'hammerjs';
 
 // AoT requires an exported function for factories
@@ -33,6 +35,8 @@ export function HttpLoaderFactory(http: Http) {
     WhereComponent,
     WhyComponent,
     DbCardsComponent,
+    AdminComponent,
+    ConfirmComponent,
     CardComponent
   ],
   imports: [
@@ -53,14 +57,19 @@ export function HttpLoaderFactory(http: Http) {
     MdInputModule,
     MdSelectModule,
     MdIconModule,
-    FormsModule,
+    MdDialogModule,
+    ReactiveFormsModule,
     HttpModule,
     FlexLayoutModule
   ],
   exports: [
     MdButtonModule,
     MdListModule,
-    MdCheckboxModule
+    MdCheckboxModule,
+    ConfirmComponent
+  ],
+  entryComponents: [
+    ConfirmComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

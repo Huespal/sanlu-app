@@ -1,7 +1,14 @@
 <md-card>
     <md-card-title class="flex-container"
                    fxLayout="row"
-                   fxLayoutAlign="space-between center">
+                   fxLayoutAlign="start center">
+
+        <!-- Admin actions -->
+        <div *ngIf="isAdmin">
+            <button md-icon-button title="{{ 'ADMIN.EDIT' | translate }}" (click)="onEdit()"><i class="material-icons">&#xE254;</i></button>
+            <button md-icon-button title="{{ 'ADMIN.DELETE' | translate }}" (click)="onDelete()"><i class="material-icons">&#xE872;</i></button>
+        </div>
+
         <strong> {{ character.name }} </strong>
         <div class="flex-container"
              fxLayout="row"

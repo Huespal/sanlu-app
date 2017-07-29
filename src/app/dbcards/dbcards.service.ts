@@ -16,5 +16,13 @@ export class DbCardsService {
             .catch((error) => Promise.reject(error.message || error));
     }
 
+    // Delete a card by id.
+    deleteCard(id) {
+        return this.http.delete(`${this.devServerPath}/cards/${id}`)
+            .toPromise()
+            .then(response => {return response.json(); })
+            .catch((error) => Promise.reject(error.message || error));
+    }
+
     constructor(private http: Http) { }
 }

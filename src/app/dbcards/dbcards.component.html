@@ -1,6 +1,7 @@
 <h1 translate="DB_CARDS.HEADER"></h1>
 
-<button md-button (click)="onStart()" style="color: #fff"> Start game! </button>
+<button md-button (click)="onStart()">{{ 'DB_CARDS.PLAY' | translate }}</button>
+<button md-button [routerLink]="['/dbcards/admin']">{{ 'DB_CARDS.MANAGE' | translate }}</button>
 
 <div class="flex-container"
          fxLayout="row"

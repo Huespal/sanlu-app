@@ -4,6 +4,7 @@ import { WhatComponent } from './what/what.component';
 import { WhereComponent } from './where/where.component';
 import { WhyComponent } from './why/why.component';
 import { DbCardsComponent } from './dbcards/dbcards.component';
+import { AdminComponent } from './dbcards/admin/admin.component';
 import { RouterModule, Routes } from '@angular/router';
 export const routes: Routes = [
     {
@@ -43,7 +44,18 @@ export const routes: Routes = [
     },
     {
         path: 'dbcards',
-        component: DbCardsComponent
+        children: [
+            {
+                path: '',
+                component: DbCardsComponent,
+                pathMatch: 'full'
+            },
+            {
+                path: 'admin',
+                component: AdminComponent,
+                pathMatch: 'full'
+            }
+        ]
     }
 ];
 

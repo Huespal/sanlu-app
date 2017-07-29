@@ -31,15 +31,24 @@ app.use(function (req, res, next) {
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    // Request headers type you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+
+    // Request headers max age.
+    res.setHeader('Access-Control-Max-Age', '86400'); // 24h.
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Credentials', false);
 
-    // Pass to next layer of middleware
-    next();
+    if (req.method === 'OPTIONS') {
+        let headers = {};
+        res.writeHead(200, headers);
+        res.end();
+    } else {
+        // Pass to next layer of middleware
+        next();
+    }
 });
 
 // Routing: home

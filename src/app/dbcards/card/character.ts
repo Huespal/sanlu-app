@@ -3,6 +3,13 @@ export class Character {
 
     /**
      * @desc
+     *  Id.
+     * @type {number}
+     */
+    _id: number;
+
+    /**
+     * @desc
      *  Remaining energy.
      * @type {number}
      */

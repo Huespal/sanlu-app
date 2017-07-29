@@ -35,7 +35,7 @@ exports.modify_card = (req, res) => {
 
 // DELETE card.
 exports.delete_card = (req, res) => {
-    Card.remove({id: req.params.id}, (err, card) => {manageOutput(res, err, `Card ${card.name} successfully deleted`);});
+    Card.remove({id: req.params.id}, (err, output) => {manageOutput(res, err, output);});
 };
 
 /**
