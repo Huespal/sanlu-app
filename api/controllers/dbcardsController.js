@@ -27,7 +27,7 @@ exports.get_card = (req, res) => {
 // PUT card.
 exports.modify_card = (req, res) => {
     Card.findOneAndUpdate(
-        {id: req.params.id},
+        {_id: req.params.id},
         req.body,
         {new: true},
         (err, card) => {manageOutput(res, err, card);});
@@ -35,7 +35,7 @@ exports.modify_card = (req, res) => {
 
 // DELETE card.
 exports.delete_card = (req, res) => {
-    Card.remove({id: req.params.id}, (err, output) => {manageOutput(res, err, output);});
+    Card.remove({_id: req.params.id}, (err, output) => {manageOutput(res, err, output);});
 };
 
 /**

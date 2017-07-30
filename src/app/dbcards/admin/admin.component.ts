@@ -6,6 +6,8 @@ import { cardTypes, cardStatus } from '../dbz-constants';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmService } from '../../confirm/confirm.service';
 import 'rxjs/add/operator/toPromise';
+import { Attack } from '../card/attack';
+import has = Reflect.has;
 
 @Component({
   selector: 'app-admin',
@@ -17,24 +19,24 @@ export class AdminComponent implements OnInit {
 
     /**
      * @desc
-     *  Current card data.
-     * @type {Character}
+     *  Characters data.
+     * @type {Character[]}
      */
-    currentCard     = Character;
+    charactersList: Character[] = [];
 
     /**
      * @desc
      *  Characters data.
-     * @type {Array}
+     * @type {Character[]}
      */
-    characters      = [];
+    characters: Character[] = [];
 
     /**
      * @desc
      *  Card types.
      * @type {Object}
      */
-    cardTypes      = cardTypes;
+    cardTypes       = cardTypes;
 
     /**
      * @desc
@@ -45,10 +47,10 @@ export class AdminComponent implements OnInit {
 
     /**
      * @desc
-     *  Characters data.
-     * @type {Array}
+     *  Current card data.
+     * @type {Character}
      */
-    charactersList  = [];
+    currentCard     = new Character(0, '', this.cardTypes.Z, 0, 0, '', 0, []);
 
     /**
      * @desc
@@ -71,12 +73,19 @@ export class AdminComponent implements OnInit {
      */
     cardForm        =  this.fb.group({
         cardName        : ['', Validators.required],
-        cardPicture     : ['', Validators.required],
         cardType        : [this.cardTypes.Z, Validators.required],
         cardEnergy      : [1000, Validators.required],
-        cardAttack1     : ['', Validators.required],
-        cardAttack2     : ['', Validators.required],
-        cardAttack3     : ['', Validators.required],
+        cardAttacks     : this.fb.array([
+            this.fb.group({
+                attack : ['', Validators.required],
+            }),
+            this.fb.group({
+                attack : ['', Validators.required],
+            }),
+            this.fb.group({
+                attack : ['', Validators.required],
+            })
+        ]),
         hasExtraAttack  : [false, null],
         cardAttackExtra : ['', null]
     });
@@ -86,7 +95,7 @@ export class AdminComponent implements OnInit {
      *  Search form.
      * @type {FormGroup}
      */
-    searchForm    = this.fb.group({
+    searchForm      = this.fb.group({
         searchInput: ['', Validators.required]
     });
 
@@ -99,7 +108,7 @@ export class AdminComponent implements OnInit {
      */
     onSubmitForm() {
         if (this.isCreating) {this.createCard();
-        } else if (this.isEditing) {this.editCard(this.currentCard['_id']); }
+        } else if (this.isEditing) {this.editCard(this.currentCard.id); }
     }
 
     /**
@@ -129,6 +138,62 @@ export class AdminComponent implements OnInit {
 
     /**
      * @desc
+     *  Reads image file and sets picture to current card in base64.
+     *  @params {event} - The change event.
+     */
+    onChangeCardPicture(event) {
+        const fr = new FileReader();
+        fr.onload = () => {
+            this.currentCard.setPicture(fr.result);
+        };
+        fr.readAsDataURL(event.target.files[0]);
+    }
+
+    /**
+     * @desc
+     *  Sets character name to current card.
+     */
+    onChangeCardName() {
+        this.currentCard.setName(this.cardForm.controls.cardName.value);
+    }
+
+    /**
+     * @desc
+     *  Sets character energy to current card.
+     */
+    onChangeCardEnergy() {
+        this.currentCard.setEnergy(this.cardForm.controls.cardEnergy.value);
+        this.currentCard.setMaxEnergy(this.cardForm.controls.cardEnergy.value);
+    }
+
+    /**
+     * @desc
+     *  Sets character energy to current card.
+     */
+    onChangeCardType() {
+        debugger;
+        this.currentCard.setType(this.cardForm.controls.cardType.value);
+    }
+
+    /**
+     * @desc
+     *  Sets character attacks to current card.
+     *  - Adds attack damage.
+     */
+    onChangeCardAttack() {
+        const attacks = [];
+        this.cardForm.controls.cardAttacks.value.forEach((input, i) => {
+            const attack = new Attack(),
+                  fn     = `attackDamage${i + 1}`;
+            attack.setName(input.attack);
+            attack.setDamage(this[fn]());
+            attacks.push(attack);
+        });
+        this.currentCard.setAttacks(attacks);
+    }
+
+    /**
+     * @desc
      *  Creates a card. Sends information to server to create a card.
      */
     createCard() {
@@ -148,41 +213,43 @@ export class AdminComponent implements OnInit {
             .catch((err) => { console.error(err); });
     }
 
+    /**
+     * @desc
+     *  Prepares character server data.
+     * @returns {Object}
+     */
     prepareCardData() {
+
         const formControls  = this.cardForm.controls,
-              data          = {
-                    name        : formControls.cardName.value,
-                    type        : formControls.cardType.value,
-                    energy      : formControls.cardEnergy.value,
-                    maxEnergy   : formControls.cardEnergy.value,
-                    picture     : formControls.cardPicture.value,
-                    status      : this.cardStatus.alive,
-                    attacks     : [
-                        {
-                            name    : formControls.cardAttack1.value,
-                            damage  : this.attackDamage1()
-                        },
-                        {
-                            name    : formControls.cardAttack2.value,
-                            damage  : this.attackDamage2()
-                        },
-                        {
-                            name    : formControls.cardAttack3.value,
-                            damage  : this.attackDamage3()
-                        }
-                    ]
-              };
+              attacks       = this.currentCard.attacks,
+              bodyAttacks   = [];
 
+        // Adds extra attack.
         if (formControls.hasExtraAttack.value) {
-
-            data.attacks.push({
-                name    : formControls.cardAttack2.value,
-                damage  : this.attackDamageExtra()
-            });
+            const extraAttack = new Attack();
+            extraAttack.setName(formControls.cardAttackExtra.value);
+            extraAttack.setDamage(this.attackDamageExtra());
+            attacks.push(extraAttack);
         }
 
-        debugger;
-        return data;
+       // Refactor attacks to match server needs.
+        attacks.forEach((item) => {
+            const attack = {
+                name    : item.name,
+                damage  : item.damage
+            };
+            bodyAttacks.push(attack);
+        });
+
+       return {
+            name        : this.currentCard.name,
+            type        : this.currentCard.type,
+            energy      : this.currentCard.energy,
+            maxEnergy   : this.currentCard.maxEnergy,
+            picture     : this.currentCard.picture,
+            status      : this.cardStatus.alive,
+            attacks     : bodyAttacks
+       };
     }
 
     /**
@@ -190,10 +257,7 @@ export class AdminComponent implements OnInit {
      * @returns {number}
      */
     attackDamage1() {
-
-        // TODO: Calculate damage for attack 1 with energy.
-        // this.cardForm.controls.cardEnergy.value
-        return 10;
+        return 0;
     }
 
     /**
@@ -201,10 +265,7 @@ export class AdminComponent implements OnInit {
      * @returns {number}
      */
     attackDamage2() {
-
-        // TODO: Calculate damage for attack 2 with energy.
-        // this.cardForm.controls.cardEnergy.value
-        return 10;
+        return this.cardForm.controls.cardEnergy.value * 0.08;
     }
 
     /**
@@ -212,10 +273,7 @@ export class AdminComponent implements OnInit {
      * @returns {number}
      */
     attackDamage3() {
-
-        // TODO: Calculate damage for attack 3 with energy.
-        // this.cardForm.controls.cardEnergy.value
-        return 10;
+        return 0;
     }
 
     /**
@@ -223,10 +281,7 @@ export class AdminComponent implements OnInit {
      * @returns {number}
      */
     attackDamageExtra() {
-
-        // TODO: Calculate damage for attack extra with energy.
-        // this.cardForm.controls.cardEnergy.value
-        return 10;
+        return 0;
     }
 
     /**
@@ -234,8 +289,27 @@ export class AdminComponent implements OnInit {
      *  Gets all game cards.
      */
     getCards() {
+
         this.dbcardsService.getCards()
-            .then((r) => { this.characters = r; this.charactersList = r; })
+            .then((r) => {
+                this.characters     = [];
+                this.charactersList = [];
+
+                r.forEach((item) => {
+                    const attacks = [];
+                    item.attacks.forEach((_item) => {
+                        const attack = new Attack();
+                        attack.setName(_item.name);
+                        attack.setDamage(_item.damage);
+                        attacks.push(attack);
+                    });
+
+                    const character = new Character(item._id, item.name, item.type, item.energy,
+                                                    item.maxEnergy, item.picture, item.status, attacks);
+                    this.characters.push(character);
+                    this.charactersList.push(character);
+                });
+            })
             .catch((err) => { console.error(err); });
     }
 
@@ -247,7 +321,21 @@ export class AdminComponent implements OnInit {
     handleCardEvent(e) {
         this.currentCard = e.character;
         if (e.remove) {this.deleteCard();
-        } else { this.isEditing = true; }
+        } else {
+
+            this.cardForm.controls['cardName'].setValue(this.currentCard.name);
+            this.cardForm.controls['cardType'].setValue(this.currentCard.type);
+            this.cardForm.controls['cardEnergy'].setValue(this.currentCard.energy);
+            this.cardForm.controls['cardAttacks']['controls'].forEach((validator, i) => {
+                validator.controls['attack'].setValue(this.currentCard.attacks[i].name);
+            });
+            const hasExtraAttack = this.currentCard.attacks.length > 3;
+            if (hasExtraAttack) {
+                this.cardForm.controls['hasExtraAttack'].setValue(hasExtraAttack);
+                this.cardForm.controls['cardAttackExtra'].setValue(this.currentCard.attacks[3].name);
+            }
+            this.isEditing = true;
+        }
     }
 
     /**
@@ -262,11 +350,11 @@ export class AdminComponent implements OnInit {
             .subscribe(confirm => {
 
                 if (confirm) {
-                    this.dbcardsService.deleteCard(this.currentCard['_id'])
+                    this.dbcardsService.deleteCard(this.currentCard.id)
                         .then((r) => {
 
                             this.characters.forEach((x, i) => {
-                                if (x._id === this.currentCard['_id']) {
+                                if (x.id === this.currentCard.id) {
                                     this.characters.splice(i, 1);
                                 }
                             });

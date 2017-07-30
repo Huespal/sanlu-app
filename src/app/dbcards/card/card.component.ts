@@ -52,7 +52,6 @@ export class CardComponent {
      *  Edits card.
      */
     onEdit() {
-        console.log(`Edit card ${this.character.name}`);
         this.cardEvent.emit({character: this.character, remove: false});
     }
 
@@ -61,7 +60,6 @@ export class CardComponent {
      *  Deletes card.
      */
     onDelete() {
-        console.log(`Delete card ${this.character.name}`);
         this.cardEvent.emit({character: this.character, remove: true});
     }
 

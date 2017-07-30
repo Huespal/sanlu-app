@@ -1,7 +1,7 @@
 <h1 translate="ADMIN.HEADER"></h1>
 
 <!-- Create card -->
-<button md-button *ngIf="!isCreating" (click)="isCreating = true">{{ 'ADMIN.NEW' | translate }}</button>
+<button md-button *ngIf="!isCreating && !isEditing" (click)="isCreating = true">{{ 'ADMIN.NEW' | translate }}</button>
 
 <!-- Card form -->
 <form *ngIf="isCreating || isEditing" [formGroup]="cardForm" (ngSubmit)="onSubmitForm()" >
@@ -10,45 +10,42 @@
     <md-input-container>
         <label for="card-name" translate="ADMIN.NAME"></label>
         <input id="card-name" formControlName="cardName"
+               (keyup)="onChangeCardName()"
                mdInput min="2"/>
     </md-input-container>
 
     <!-- Type -->
-    <md-select formControlName="cardType" placeholder="{{ 'ADMIN.SERIES' | translate }}">
+    <md-select formControlName="cardType" placeholder="{{ 'ADMIN.SERIES' | translate }}" (change)="onChangeCardType()">
         <md-option [value]="cardTypes.DB">{{ 'ADMIN.DB' | translate }}</md-option>
-        <md-option [value]="cardTypes.Z ">{{ 'ADMIN.Z' | translate }}</md-option>
+        <md-option [value]="cardTypes.Z">{{ 'ADMIN.Z' | translate }}</md-option>
         <md-option [value]="cardTypes.GT">{{ 'ADMIN.GT' | translate }}</md-option>
     </md-select>
 
-    <!-- Picture -->
-    <md-input-container>
-        <label for="card-picture" translate="ADMIN.PICTURE"></label>
-        <input id="card-picture" formControlName="cardPicture" mdInput/>
-    </md-input-container>
+    <!-- Picture (by text) -->
+    <!--<md-input-container>-->
+        <!--<label for="card-picture" translate="ADMIN.PICTURE"></label>-->
+        <!--<input id="card-picture" formControlName="cardPicture" mdInput/>-->
+    <!--</md-input-container>-->
+
+    <!-- Picture (by file) -->
+    <div class="card-picture-container">
+        <label for="card-picture" translate="ADMIN.PICTURE" class="card-picture-label"></label>
+        <input id="card-picture" type="file" accept="image/*" (change)="onChangeCardPicture($event)"/>
+    </div>
 
     <!-- Energy -->
     <md-input-container>
         <label for="card-energy" translate="ADMIN.ENERGY"></label>
-        <input id="card-energy" min="0" type="number" formControlName="cardEnergy" mdInput/>
+        <input id="card-energy" min="0" type="number" formControlName="cardEnergy" mdInput (keyup)="onChangeCardEnergy()"/>
     </md-input-container>
 
-    <!-- Attack 1 -->
-    <md-input-container>
-        <label for="card-attack-1">{{ 'ADMIN.ATTACK' | translate }} 1</label>
-        <input id="card-attack-1" formControlName="cardAttack1" mdInput/>
-    </md-input-container>
-
-    <!-- Attack 2 -->
-    <md-input-container>
-        <label for="card-attack-2">{{ 'ADMIN.ATTACK' | translate }} 2</label>
-        <input id="card-attack-2" formControlName="cardAttack2" mdInput/>
-    </md-input-container>
-
-    <!-- Attack 3 -->
-    <md-input-container>
-        <label for="card-attack-3">{{ 'ADMIN.ATTACK' | translate }} 3</label>
-        <input id="card-attack-3" formControlName="cardAttack3" mdInput/>
-    </md-input-container>
+    <!-- Attacks -->
+    <div formArrayName="cardAttacks">
+        <md-input-container  *ngFor="let attack of cardForm.get('cardAttacks').controls; let i=index" [formGroupName]="i">
+            <label for="card-attack-{{i+1}}">{{ 'ADMIN.ATTACK' | translate }} {{ i+1 }}</label>
+            <input id="card-attack-{{i+1}}" formControlName="attack" mdInput (keyup)="onChangeCardAttack()"/>
+        </md-input-container>
+    </div>
 
     <!-- Has extra attack checkbox -->
     <md-checkbox *ngIf="!cardForm.controls.hasExtraAttack.value" formControlName="hasExtraAttack">{{ 'ADMIN.ATTACK' | translate }}  {{ 'ADMIN.EXTRA' | translate | lowercase }}</md-checkbox>
@@ -64,7 +61,7 @@
     <div *ngIf="isCreating"
          class="flex-container"
          fxLayout="row"
-         fxLayoutAlign="end start">
+         fxLayoutAlign="start start">
         <button md-button (click)="isCreating = false">{{ 'DIALOG.CANCEL' | translate }}</button>
         <button md-button [disabled]="!cardForm.valid">{{ 'ADMIN.CREATE' | translate }}</button>
     </div>
@@ -73,7 +70,7 @@
     <div *ngIf="isEditing"
          class="flex-container"
          fxLayout="row"
-         fxLayoutAlign="end start">
+         fxLayoutAlign="start start">
         <button md-button (click)="isEditing = false">{{ 'DIALOG.CANCEL' | translate }}</button>
         <button md-button [disabled]="!cardForm.valid">{{ 'ADMIN.EDIT' | translate }}</button>
     </div>

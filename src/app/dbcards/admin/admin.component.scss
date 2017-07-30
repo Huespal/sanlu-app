@@ -11,7 +11,22 @@
   padding: 20px;
 }
 
-md-input-container {
+md-input-container, .card-picture-container {
   margin: 20px 0;
   max-width: 150px;
+  #card-picture {
+    display: none;
+  }
+  .card-picture-label {
+    cursor: pointer;
+  }
+}
+
+md-select.mat-select {
+  .mat-select-arrow,
+  .mat-select-placeholder,
+  .mat-select-disabled .mat-select-value,
+  .mat-select-trigger {
+    color: $white;
+  }
 }

@@ -18,7 +18,7 @@
         </div>
     </md-card-title>
     <md-card-content>
-        <img class="card-img" alt="{{ character.name }}" src="../../../assets/img/cards/{{ character.picture }}.jpg" />
+        <img class="card-img" alt="{{ character.name }}" src="{{ character.picture }}" />
     </md-card-content>
     <md-card-actions [ngClass]="{'dbz-bg' : character.type === cardTypes.Z,
                                  'dbgt-bg': character.type === cardTypes.GT,

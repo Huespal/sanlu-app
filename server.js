@@ -19,8 +19,8 @@ mongoose.connect('mongodb://sanlu:#sanlu@ds141232.mlab.com:41232/dbzcards');
 // app.use(express.static(path.join(__dirname, 'src')));
 
 // Body Parser middleware.
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 
 // Add headers
 app.use(function (req, res, next) {
