@@ -7,7 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfirmService } from '../../confirm/confirm.service';
 import 'rxjs/add/operator/toPromise';
 import { Attack } from '../card/attack';
-import has = Reflect.has;
 
 @Component({
   selector: 'app-admin',
@@ -101,6 +100,13 @@ export class AdminComponent implements OnInit {
 
     /**
      * @desc
+     *  Create card form image preview.
+     * @type {string}
+     */
+    formImgPreview  = '';
+
+    /**
+     * @desc
      *  Callback to submit card form.
      *  - Create card.
      *  - Edit card.
@@ -109,6 +115,21 @@ export class AdminComponent implements OnInit {
     onSubmitForm() {
         if (this.isCreating) {this.createCard();
         } else if (this.isEditing) {this.editCard(this.currentCard.id); }
+    }
+
+    /**
+     * @desc
+     *  Callback to allow create card form.
+     *  @params $event - The click event.
+     */
+    onShowCreateCardForm() {
+        this.cardForm.reset({
+            cardType        : this.cardTypes.Z,
+            cardEnergy      : 1000,
+            hasExtraAttack  : false
+        });
+        this.formImgPreview = '';
+        this.isCreating     = true;
     }
 
     /**
@@ -142,11 +163,50 @@ export class AdminComponent implements OnInit {
      *  @params {event} - The change event.
      */
     onChangeCardPicture(event) {
-        const fr = new FileReader();
-        fr.onload = () => {
-            this.currentCard.setPicture(fr.result);
+        const img = new Image();
+
+        img.onload = () => {
+            const picture = this.imageToDataUri(img);
+            this.currentCard.setPicture(picture);
+            this.formImgPreview = picture;
         };
-        fr.readAsDataURL(event.target.files[0]);
+        img.src = URL.createObjectURL(event.target.files[0]);
+    }
+
+    /**
+     * @desc
+     *  Resizes image.
+     *  @params {event} - The change event.
+     */
+    calculateAspectRatioFit(img, maxWidth, maxHeight) {
+
+        const srcWidth  = img.width,
+              srcHeight = img.height,
+              ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+
+        img.width = srcWidth * ratio;
+        img.height = srcHeight * ratio;
+    }
+
+    /**
+     * @desc
+     *  Reads image file and sets picture to current card in base64.
+     *  @params {event} - The change event.
+     */
+    imageToDataUri(img) {
+
+        const canvas = document.createElement('canvas'),
+              ctx    = canvas.getContext('2d'),
+              maxWidth  = 175,
+              maxHeight = 175;
+
+        if (img.width > maxWidth || img.height > maxHeight) {
+            this.calculateAspectRatioFit(img, maxWidth, maxHeight);
+        }
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        return canvas.toDataURL();
     }
 
     /**
@@ -171,7 +231,6 @@ export class AdminComponent implements OnInit {
      *  Sets character energy to current card.
      */
     onChangeCardType() {
-        debugger;
         this.currentCard.setType(this.cardForm.controls.cardType.value);
     }
 
@@ -199,7 +258,10 @@ export class AdminComponent implements OnInit {
     createCard() {
 
         this.dbcardsService.createCard(this.prepareCardData())
-            .then(() => {this.getCards(); })
+            .then(() => {
+                this.isCreating = false;
+                this.getCards();
+            })
             .catch((err) => { console.error(err); });
     }
 
@@ -209,7 +271,10 @@ export class AdminComponent implements OnInit {
      */
     editCard(cardId) {
         this.dbcardsService.editCard(cardId, this.prepareCardData())
-            .then(() => {this.getCards(); })
+            .then(() => {
+                this.isEditing = false;
+                this.getCards();
+            })
             .catch((err) => { console.error(err); });
     }
 
@@ -334,6 +399,7 @@ export class AdminComponent implements OnInit {
                 this.cardForm.controls['hasExtraAttack'].setValue(hasExtraAttack);
                 this.cardForm.controls['cardAttackExtra'].setValue(this.currentCard.attacks[3].name);
             }
+            this.isCreating = false;
             this.isEditing = true;
         }
     }

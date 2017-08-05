@@ -1,15 +1,20 @@
 <md-card>
     <md-card-title class="flex-container"
                    fxLayout="row"
-                   fxLayoutAlign="start center">
+                   fxLayoutAlign="space-between center">
+
+        <!-- Character name -->
+        <strong class="character-name" title="{{ character.name }}"> {{ character.name }} </strong>
 
         <!-- Admin actions -->
-        <div *ngIf="isAdmin">
+        <div *ngIf="isAdmin" class="flex-container"
+             fxLayout="row"
+             fxLayoutAlign="start center">
             <button md-icon-button title="{{ 'ADMIN.EDIT' | translate }}" (click)="onEdit()"><i class="material-icons">&#xE254;</i></button>
             <button md-icon-button title="{{ 'ADMIN.DELETE' | translate }}" (click)="onDelete()"><i class="material-icons">&#xE872;</i></button>
         </div>
 
-        <strong> {{ character.name }} </strong>
+        <!-- Character energy -->
         <div class="flex-container"
              fxLayout="row"
              fxLayoutAlign="end center">
@@ -17,9 +22,14 @@
             <div title="{{ character.energy }} / {{ character.maxEnergy }}"> {{ character.energy }}</div>
         </div>
     </md-card-title>
-    <md-card-content>
-        <img class="card-img" alt="{{ character.name }}" src="{{ character.picture }}" />
+
+    <md-card-content class="card-img flex-container"
+                     fxLayout="row"
+                     fxLayoutAlign="center center">
+        <!-- Character picture -->
+        <img alt="{{ character.name }}" src="{{ character.picture }}" />
     </md-card-content>
+
     <md-card-actions [ngClass]="{'dbz-bg' : character.type === cardTypes.Z,
                                  'dbgt-bg': character.type === cardTypes.GT,
                                  'db-bg'  : character.type === cardTypes.DB}">

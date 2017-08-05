@@ -5,10 +5,27 @@
   padding: 10px;
   background-color: $white-opacity;
   color: $white;
+  width: 100%;
 }
 
 .card {
   padding: 20px;
+}
+
+.new-card {
+  width: 240px;
+  min-width: 240px;
+  margin: 20px;
+  height: 370px;
+  border: 10px dashed $white-opacity;
+  color: $white-opacity;
+  i {
+    font-size: 96px;
+  }
+  &:hover {
+    border-color: $white;
+    color: $white;
+  }
 }
 
 md-input-container, .card-picture-container {
@@ -19,14 +36,5 @@ md-input-container, .card-picture-container {
   }
   .card-picture-label {
     cursor: pointer;
-  }
-}
-
-md-select.mat-select {
-  .mat-select-arrow,
-  .mat-select-placeholder,
-  .mat-select-disabled .mat-select-value,
-  .mat-select-trigger {
-    color: $white;
   }
 }

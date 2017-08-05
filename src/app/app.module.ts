@@ -5,7 +5,7 @@ import { ReactiveFormsModule  } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule, MdListModule, MdInputModule,
-         MdSelectModule, MdIconModule, MdCardModule, MdDialogModule } from '@angular/material';
+         MdSelectModule, MdIconModule, MdCardModule, MdDialogModule, MdTabsModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -58,6 +58,7 @@ export function HttpLoaderFactory(http: Http) {
     MdSelectModule,
     MdIconModule,
     MdDialogModule,
+    MdTabsModule,
     ReactiveFormsModule,
     HttpModule,
     FlexLayoutModule

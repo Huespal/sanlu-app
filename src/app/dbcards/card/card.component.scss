@@ -3,19 +3,26 @@
 md-card {
   transition: transform .5s ease-in-out;
   max-width: 200px;
+  min-width: 200px;
   user-select: none;
   cursor: default;
+  .character-name {
+    @extend .truncate;
+    min-width: 60px;
+  }
   .energy-icon {
     color: $gold;
   }
   .card-img {
-    width: 100%;
-    height: 100%;
+    text-align: center;
+    height: 175px;
+    margin-bottom: 0;
   }
   &:hover {
     @extend .selected;
   }
-  button {
+  md-card-actions {
+    button {
       background-color: transparent;
       border: none;
       padding: 10px 20px;
@@ -32,6 +39,7 @@ md-card {
         color: $blue;
       }
     }
+  }
   .dbz-bg {
     background: url('../../../assets/img/cards/common/card-bg-z.png') 50% no-repeat;
   }
@@ -46,4 +54,10 @@ md-card {
 .selected {
   transform: scale(1.1);
   animation: blue-glow 1.5s ease-in-out infinite alternate;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
