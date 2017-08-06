@@ -6,3 +6,14 @@
         <app-menu class="flex-item" fxFlex="15%"></app-menu>
         <router-outlet class="right-element"></router-outlet>
 </div>
+<footer>
+    <form class="flex-container"
+          fxLayout="row"
+          fxLayoutAlign="end center">
+        <!-- Language -->
+        <md-select [(ngModel)]="currentLang" name="language" placeholder="{{ 'LANGUAGE' | translate }}" (change)="onChangeLanguage()">
+                <md-option [value]="lang.CA">{{ lang.CA | uppercase }}</md-option>
+                <md-option [value]="lang.EN">{{ lang.EN | uppercase }}</md-option>
+        </md-select>
+    </form>
+</footer>

@@ -36,5 +36,14 @@ export class DbCardsComponent {
             .catch((err) => { console.error(err); });
     }
 
+    /**
+     * @desc
+     *  Gets card id from card component and stores it.
+     * @param {Object} e - The event object.
+     */
+    handleCardEvent(e) {
+        if (e.attack) { alert(`Perform attack: ${e.attack.name}`); }
+    }
+
     constructor(private dbcardsService: DbCardsService) { }
 }

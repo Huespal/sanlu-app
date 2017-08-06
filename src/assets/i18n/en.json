@@ -1,4 +1,5 @@
 {
+  "LANGUAGE"  : "Language",
   "MENU"  : {
     "WHO"       : "Who I am?",
     "WHAT"      : "What I do?",
@@ -31,7 +32,8 @@
     "EXTRA"       : "Extra",
     "EDIT"        : "Edit card",
     "DELETE"      : "Delete card",
-    "SEARCH"      : "Search card"
+    "SEARCH"      : "Search card",
+    "NO_CARDS"    : "There are no cards. Try to create one."
   },
   "DIALOG"  : {
     "MSG_DELETE"  : "Are you sure you want to delete <strong>{{name}}</strong>",

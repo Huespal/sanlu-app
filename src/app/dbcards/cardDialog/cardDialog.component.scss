@@ -1,0 +1,37 @@
+@import '../../../colors.scss';
+
+form {
+  height: 600px;
+  width: 550px;
+  md-input-container, .card-picture-container {
+    margin: 15px 0;
+    max-width: 150px;
+    #card-picture {
+      display: none;
+    }
+    .card-picture-label {
+      cursor: pointer;
+      i {
+        font-size: 96px;
+      }
+    }
+  }
+  .card-picture-container {
+    height: 200px;
+  }
+  md-select {
+    margin: 25px 0;
+  }
+  md-checkbox {
+    margin-right: 20px;
+  }
+  .dbz-bg {
+    background: url('../../../assets/img/cards/common/card-bg-z.png') 50% no-repeat;
+  }
+  .dbgt-bg {
+    background: url('../../../assets/img/cards/common/card-bg-gt.png') 50% no-repeat;
+  }
+  .db-bg {
+    background: url('../../../assets/img/cards/common/card-bg-db.png') 50% no-repeat;
+  }
+}

@@ -1,4 +1,5 @@
 {
+  "LANGUAGE"  : "Idioma",
   "MENU"      : {
     "WHO"       : "Qui sóc?",
     "WHAT"      : "Què faig?",
@@ -31,9 +32,10 @@
     "EXTRA"       : "Extra",
     "EDIT"        : "Editar carta",
     "DELETE"      : "Eliminar carta",
-    "SEARCH"      : "Cercar carta"
+    "SEARCH"      : "Cercar carta",
+    "NO_CARDS"    : "No hi ha cartes. Prova a crear-ne una."
   },
-  "DIALOG"  : {
+  "DIALOG"    : {
     "MSG_DELETE"  : "Estàs segur/a que vols eliminar <strong>{{name}}</strong>",
     "OK"          : "D'acord",
     "CANCEL"      : "Cancel·lar"

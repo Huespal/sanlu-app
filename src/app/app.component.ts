@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { language } from './app-constants';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,20 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+    /**
+     * @desc
+     *  Language object.
+     * @type {Object}
+     */
+    lang        = language;
+
+    /**
+     * @desc
+     *  Language object.
+     * @type {Object}
+     */
+    currentLang = this.lang.CA;
 
     /**
      * @desc
@@ -31,6 +46,15 @@ export class AppComponent implements OnInit {
 
     /**
      * @desc
+     *  Changes app language.
+     */
+    onChangeLanguage() {
+        this.translate.setDefaultLang(this.currentLang);
+        this.translate.use(this.currentLang);
+    }
+
+    /**
+     * @desc
      *  On init.
      *  - Changes app background every interval time.
      */
@@ -52,8 +76,7 @@ export class AppComponent implements OnInit {
         body.classList.add('sanlu-bg-' + this.bgNum );
     }
 
-    constructor(translate: TranslateService) {
-        translate.setDefaultLang('ca');
-        translate.use('ca');
+    constructor(public translate: TranslateService) {
+        this.onChangeLanguage();
     }
 }

@@ -44,7 +44,7 @@ export class CardComponent {
      * @param {Attack} attack - The card attack.
      */
     onAttack(attack) {
-        alert(`Perform attack: ${attack.name}`);
+        this.cardEvent.emit({character: this.character, attack: attack});
     }
 
     /**
