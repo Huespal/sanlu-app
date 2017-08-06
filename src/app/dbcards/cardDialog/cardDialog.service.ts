@@ -6,12 +6,13 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class CardDialogService {
 
-    public open(character, isCreating): Observable<boolean> {
+    public open(character, skill, isCreating): Observable<boolean> {
 
         let dialogRef: MdDialogRef<any>;
 
         dialogRef = this.dialog.open(CardDialogComponent);
         dialogRef.componentInstance.character   = character;
+        dialogRef.componentInstance.skill       = skill;
         dialogRef.componentInstance.isCreating  = isCreating;
 
         return dialogRef.afterClosed();

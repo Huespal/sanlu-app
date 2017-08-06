@@ -13,19 +13,31 @@
     "CHARACTER"   : "Character",
     "ATTACK_INFO" : "Click on an attack to activate it",
     "PLAY"        : "Play",
-    "MANAGE"      : "Manage"
+    "MANAGE"      : "Manage",
+    "SKILLS"      : {
+      "ENERGY"        : "Attack energy",
+      "COMBO"         : "Fist",
+      "BEAN"          : "Magic bean",
+      "TRAIN"         : "Training room",
+      "SPECIAL"       : "Special attack",
+      "DRAGON_BALLS"  : "Dragon balls",
+      "EARTH"         : "Earth",
+      "NAMEK"         : "Namek",
+      "UNIVERSE"      : "Universe"
+    }
   },
   "ADMIN"     : {
     "HEADER"      : "Dragon Ball Cards Administrator",
     "NEW"         : "New card",
     "CREATE"      : "Create card",
     "CHARACTERS"  : "Characters",
-    "OTHERS"      : "Others",
+    "SKILLS"      : "Skills",
     "NAME"        : "Name",
     "PICTURE"     : "Image",
     "ENERGY"      : "Energy",
     "ATTACK"      : "Attack",
     "SERIES"      : "Series",
+    "TYPE"        : "Type",
     "DB"          : "Dragon Ball",
     "Z"           : "Dragon Ball Z",
     "GT"          : "Dragon Ball GT",
@@ -33,7 +45,7 @@
     "EDIT"        : "Edit card",
     "DELETE"      : "Delete card",
     "SEARCH"      : "Search card",
-    "NO_CARDS"    : "There are no cards. Try to create one."
+    "NO_CARDS"    : "There are no cards."
   },
   "DIALOG"  : {
     "MSG_DELETE"  : "Are you sure you want to delete <strong>{{name}}</strong>",

@@ -33,7 +33,17 @@
             <p *ngIf="characters.length <= 0" translate="ADMIN.NO_CARDS"></p>
         </div>
     </md-tab>
-    <md-tab label="{{ 'ADMIN.OTHERS' | translate }}">
-        TODO: Non-character cards
+    <md-tab label="{{ 'ADMIN.SKILLS' | translate }}">
+
+        <div class="flex-container"
+             fxLayout="row"
+             fxLayoutAlign="start center">
+
+            <!-- Cards list -->
+            <app-card *ngFor="let skill of skills; index as i;" [skill]="skill" [isAdmin]="true" (cardEvent)="handleCardEvent($event)" class="card"></app-card>
+        </div>
+
+        <!-- No cards feedback -->
+        <p *ngIf="skills.length <= 0" translate="ADMIN.NO_CARDS"></p>
     </md-tab>
 </md-tab-group>

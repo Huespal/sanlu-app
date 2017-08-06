@@ -1,4 +1,6 @@
-<md-card>
+
+<!-- Character -->
+<md-card *ngIf="!!character">
     <md-card-title class="flex-container"
                    fxLayout="row"
                    fxLayoutAlign="space-between center">
@@ -10,7 +12,7 @@
         <div *ngIf="isAdmin" class="flex-container"
              fxLayout="row"
              fxLayoutAlign="start center">
-            <button md-icon-button title="{{ 'ADMIN.EDIT' | translate }}" (click)="onEdit()"><i class="material-icons">&#xE254;</i></button>
+            <button md-icon-button title="{{ 'ADMIN.EDIT' | translate }}" (click)="onEdit(character)"><i class="material-icons">&#xE254;</i></button>
             <button md-icon-button title="{{ 'ADMIN.DELETE' | translate }}" (click)="onDelete()"><i class="material-icons">&#xE872;</i></button>
         </div>
 
@@ -42,4 +44,29 @@
             <span class="flex-item" fxFlex="25%">{{ attack.damage }}</span>
         </button>
     </md-card-actions>
+</md-card>
+
+<!-- Skill -->
+<md-card *ngIf="!!skill">
+    <md-card-title class="flex-container"
+                   fxLayout="row"
+                   fxLayoutAlign="space-between center">
+
+        <!-- Skill name -->
+        <strong class="character-name" title="{{ skill.name }}"> {{ skill.name }} </strong>
+
+        <!-- Admin actions -->
+        <div *ngIf="isAdmin" class="flex-container"
+             fxLayout="row"
+             fxLayoutAlign="start center">
+            <button md-icon-button title="{{ 'ADMIN.EDIT' | translate }}" (click)="onEdit()"><i class="material-icons">&#xE254;</i></button>
+        </div>
+    </md-card-title>
+
+    <md-card-content class="card-img flex-container"
+                     fxLayout="row"
+                     fxLayoutAlign="center center">
+        <!-- Character picture -->
+        <img alt="{{ skill.name }}" src="{{ skill.picture }}" />
+    </md-card-content>
 </md-card>

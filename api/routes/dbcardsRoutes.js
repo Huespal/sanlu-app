@@ -3,17 +3,28 @@
 let cards = require('../controllers/dbcardsController');
 
 module.exports = (app) => {
-    // GET cards.
-    // POST card.
-    app.route('/api/cards')
-        .get(cards.get_all_cards)
-        .post(cards.create_card);
+    // GET characters.
+    // POST character.
+    app.route('/api/characters')
+        .get(cards.get_all_characters)
+        .post(cards.create_character);
 
-    // GET card.
-    // PUT card.
-    // DELETE card.
-    app.route('/api/cards/:id')
-        .get(cards.get_card)
-        .put(cards.modify_card)
-        .delete(cards.delete_card);
+    // GET character.
+    // PUT character.
+    // DELETE character.
+    app.route('/api/characters/:id')
+        .get(cards.get_character)
+        .put(cards.modify_character)
+        .delete(cards.delete_character);
+
+    // GET skills.
+    app.route('/api/skills')
+        .get(cards.get_all_skills)
+        .post(cards.create_skill);
+
+    // GET skill.
+    // PUT skill.
+    app.route('/api/skills/:id')
+        .get(cards.get_skill)
+        .put(cards.modify_skill);
 };

@@ -3,8 +3,8 @@
 <h1 *ngIf="isCreating" translate="ADMIN.CREATE"></h1>
 <h1 *ngIf="!isCreating" translate="ADMIN.EDIT"></h1>
 
-<!-- Card form -->
-<form [formGroup]="cardForm" (ngSubmit)="onSubmitForm()">
+<!-- Character form -->
+<form *ngIf="!!character" [formGroup]="characterForm" (ngSubmit)="onSubmitForm()">
 
     <div class="flex-container"
          fxLayout="row"
@@ -13,22 +13,22 @@
         <!-- Name -->
         <md-input-container>
             <label for="card-name" translate="ADMIN.NAME"></label>
-            <input id="card-name" formControlName="cardName"
+            <input id="card-name" formControlName="characterName"
                    (keyup)="onChangeCardName()"
                    mdInput min="2"/>
         </md-input-container>
 
         <!-- Type -->
-        <md-select formControlName="cardType" placeholder="{{ 'ADMIN.SERIES' | translate }}" (change)="onChangeCardType()">
-            <md-option [value]="cardTypes.DB">{{ 'ADMIN.DB' | translate }}</md-option>
-            <md-option [value]="cardTypes.Z">{{ 'ADMIN.Z' | translate }}</md-option>
-            <md-option [value]="cardTypes.GT">{{ 'ADMIN.GT' | translate }}</md-option>
+        <md-select formControlName="characterType" placeholder="{{ 'ADMIN.SERIES' | translate }}" (change)="onChangeCardType()">
+            <md-option [value]="characterTypes.DB">{{ 'ADMIN.DB' | translate }}</md-option>
+            <md-option [value]="characterTypes.Z">{{ 'ADMIN.Z' | translate }}</md-option>
+            <md-option [value]="characterTypes.GT">{{ 'ADMIN.GT' | translate }}</md-option>
         </md-select>
 
         <!-- Energy -->
         <md-input-container>
             <label for="card-energy" translate="ADMIN.ENERGY"></label>
-            <input id="card-energy" min="0" type="number" formControlName="cardEnergy" mdInput (keyup)="onChangeCardEnergy()"/>
+            <input id="card-energy" min="0" type="number" formControlName="characterEnergy" mdInput (keyup)="onChangeCardEnergy()"/>
         </md-input-container>
     </div>
 
@@ -50,16 +50,16 @@
     <div class="flex-container"
          fxLayout="column"
          fxLayoutAlign="start start"
-         [ngClass]="{'dbz-bg' : character.type === cardTypes.Z,
-                     'dbgt-bg': character.type === cardTypes.GT,
-                     'db-bg'  : character.type === cardTypes.DB}">
+         [ngClass]="{'dbz-bg' : character.type === characterTypes.Z,
+                     'dbgt-bg': character.type === characterTypes.GT,
+                     'db-bg'  : character.type === characterTypes.DB}">
 
         <!-- Attacks -->
-        <div formArrayName="cardAttacks"
+        <div formArrayName="characterAttacks"
              class="flex-container"
              fxLayout="column"
              fxLayoutAlign="start start">
-            <md-input-container  *ngFor="let attack of cardForm.get('cardAttacks').controls; let i=index" [formGroupName]="i">
+            <md-input-container *ngFor="let attack of characterForm.get('characterAttacks').controls; let i=index" [formGroupName]="i">
                 <label for="card-attack-{{i+1}}">{{ 'ADMIN.ATTACK' | translate }} {{ i+1 }}</label>
                 <input id="card-attack-{{i+1}}" formControlName="attack" mdInput (keyup)="onChangeCardAttack()"/>
             </md-input-container>
@@ -74,9 +74,9 @@
             <md-checkbox formControlName="hasExtraAttack" title="{{ 'ADMIN.ATTACK' | translate }}  {{ 'ADMIN.EXTRA' | translate | lowercase }}"></md-checkbox>
             <md-input-container>
                 <label for="card-attack-extra">{{ 'ADMIN.ATTACK' | translate }} {{ 'ADMIN.EXTRA' | translate | lowercase }}</label>
-                <input id="card-attack-extra" formControlName="cardAttackExtra" mdInput/>
+                <input id="card-attack-extra" formControlName="characterExtraAttack" mdInput/>
             </md-input-container>
-            <button *ngIf="cardForm.controls.hasExtraAttack.value" md-icon-button (click)="onCancelExtraAttack()"><i class="material-icons">&#xE5CD;</i></button>
+            <button *ngIf="characterForm.controls.hasExtraAttack.value" md-icon-button (click)="onCancelExtraAttack()"><i class="material-icons">&#xE5CD;</i></button>
         </div>
     </div>
 
@@ -85,6 +85,69 @@
          fxLayout="row"
          fxLayoutAlign="end center">
         <button md-button type="button" (click)="dialogRef.close(false)">{{ 'DIALOG.CANCEL' | translate }}</button>
-        <button md-button [disabled]="!cardForm.valid">{{ 'DIALOG.OK' | translate }}</button>
+        <button md-button [disabled]="!characterForm.valid">{{ 'DIALOG.OK' | translate }}</button>
+    </div>
+</form>
+
+<!-- Skill form -->
+<form *ngIf="!!skill" [formGroup]="skillForm" (ngSubmit)="onSubmitForm()">
+
+    <div class="flex-container"
+         fxLayout="row"
+         fxLayoutAlign="space-between start">
+
+        <!-- Name -->
+        <md-input-container>
+            <label for="skill-name" translate="ADMIN.NAME"></label>
+            <input id="skill-name" formControlName="skillName"
+                   (keyup)="onChangeCardName()"
+                   mdInput min="2"/>
+        </md-input-container>
+    </div>
+
+    <div class="flex-container"
+         fxLayout="column"
+         fxLayoutAlign="center center">
+
+        <!-- Picture -->
+        <div class="card-picture-container">
+            <label for="skill-picture" title="{{ 'ADMIN.PICTURE' | translate }}" class="card-picture-label">
+                <i *ngIf="!imgPreview" class="material-icons">&#xE851;</i>
+                <!-- Picture preview -->
+                <img *ngIf="!!imgPreview" src="{{ imgPreview }}">
+            </label>
+            <input hidden id="skill-picture" type="file" accept="image/*" (change)="onChangeCardPicture($event)"/>
+        </div>
+    </div>
+
+    <div class="flex-container"
+         fxLayout="column"
+         fxLayoutAlign="start start">
+
+        <!-- Type -->
+        <md-select formControlName="skillType" placeholder="{{ 'ADMIN.TYPE' | translate }}" (change)="onChangeCardType()">
+            <md-option *ngFor="let type of skillTypesAux; index as i;" [value]="type.id">{{ type.name }}</md-option>
+        </md-select>
+
+        <!-- Energy -->
+        <md-input-container>
+            <label for="skill-energy" translate="ADMIN.ENERGY"></label>
+            <input id="skill-energy" min="0" type="number" formControlName="skillEnergy" mdInput (keyup)="onChangeCardEnergy()"/>
+        </md-input-container>
+
+        <!-- Combo -->
+        <md-input-container>
+            <label for="skill-combo" translate="ADMIN.ATTACK"></label>
+            <input id="skill-combo" min="0" type="number" formControlName="skillCombo" mdInput (keyup)="onChangeCardCombo()"/>
+        </md-input-container>
+    </div>
+
+
+    <!-- Dialog controls -->
+    <div class="flex-container"
+         fxLayout="row"
+         fxLayoutAlign="end center">
+        <button md-button type="button" (click)="dialogRef.close(false)">{{ 'DIALOG.CANCEL' | translate }}</button>
+        <button md-button [disabled]="!skillForm.valid">{{ 'DIALOG.OK' | translate }}</button>
     </div>
 </form>

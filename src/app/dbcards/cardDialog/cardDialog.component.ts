@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
 import { Character } from '../card/character';
-import { cardTypes, cardStatus } from '../dbz-constants';
+import { Skill } from '../card/skill';
+import { characterTypes, characterStatus, skillTypes } from '../dbz-constants';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Attack } from '../card/attack';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-card-dialog',
@@ -14,35 +16,68 @@ export class CardDialogComponent implements OnInit {
 
     /**
      * @desc
-     *  Card types.
+     *  Character types.
      * @type {Object}
      */
-    cardTypes   = cardTypes;
+    characterTypes  = characterTypes;
+
+    /**
+     * @desc
+     *  Skill types.
+     * @type {Object}
+     */
+    skillTypes      = skillTypes;
+
+    /**
+     * @desc
+     *  Skill types auxiliary.
+     * @type {Array}
+     */
+    skillTypesAux   = [
+        { id: this.skillTypes.energy,   name: this.translateService.instant('DB_CARDS.SKILLS.ENERGY')},
+        { id: this.skillTypes.combo,    name: this.translateService.instant('DB_CARDS.SKILLS.COMBO')},
+        { id: this.skillTypes.life,     name: this.translateService.instant('DB_CARDS.SKILLS.BEAN')},
+        { id: this.skillTypes.extra,    name: this.translateService.instant('DB_CARDS.SKILLS.SPECIAL')},
+        { id: this.skillTypes.buff,     name: this.translateService.instant('DB_CARDS.SKILLS.TRAIN')},
+        { id: this.skillTypes.earth,    name: `${this.translateService.instant('DB_CARDS.SKILLS.DRAGON_BALLS')} 
+                                               ${this.translateService.instant('DB_CARDS.SKILLS.EARTH')}`},
+        { id: this.skillTypes.planet,   name: `${this.translateService.instant('DB_CARDS.SKILLS.DRAGON_BALLS')} 
+                                               ${this.translateService.instant('DB_CARDS.SKILLS.NAMEK')}`},
+        { id: this.skillTypes.universe, name: `${this.translateService.instant('DB_CARDS.SKILLS.DRAGON_BALLS')} 
+                                               ${this.translateService.instant('DB_CARDS.SKILLS.UNIVERSE')}`}
+    ];
 
     /**
      * @desc
      *  Card status.
      * @type {Object}
      */
-    cardStatus  = cardStatus;
+    characterStatus = characterStatus;
 
     /**
      * @desc
      *  Dialog character.
      * @type {string}
      */
-    character   = new Character(0, '', this.cardTypes.Z, 0, 0, '', 0, []);
+    character       = new Character(0, '', this.characterTypes.Z, 0, 0, '', 0, []);
 
     /**
      * @desc
-     *  Card form.
+     *  Dialog skill.
+     * @type {string}
+     */
+    skill           = new Skill(0, '', this.skillTypes.energy, 0, 0, '');
+
+    /**
+     * @desc
+     *  Character form.
      * @type {FormGroup}
      */
-    cardForm    =  this.fb.group({
-        cardName        : ['', Validators.required],
-        cardType        : [this.cardTypes.Z, Validators.required],
-        cardEnergy      : [1000, Validators.required],
-        cardAttacks     : this.fb.array([
+    characterForm    =  this.fb.group({
+        characterName        : ['', Validators.required],
+        characterType        : [this.characterTypes.Z, Validators.required],
+        characterEnergy      : [1000, Validators.required],
+        characterAttacks     : this.fb.array([
             this.fb.group({
                 attack : ['', Validators.required],
             }),
@@ -53,8 +88,20 @@ export class CardDialogComponent implements OnInit {
                 attack : ['', Validators.required],
             })
         ]),
-        hasExtraAttack  : [false, null],
-        cardAttackExtra : [{value: '', disabled: true}, null]
+        hasExtraAttack       : [false, null],
+        characterExtraAttack : [{value: '', disabled: true}, null]
+    });
+
+    /**
+     * @desc
+     *  Skill form.
+     * @type {FormGroup}
+     */
+    skillForm       =  this.fb.group({
+        skillName   : ['', Validators.required],
+        skillType   : [this.skillTypes.energy, Validators.required],
+        skillEnergy : [0, Validators.required],
+        skillCombo  : [0, Validators.required]
     });
 
     /**
@@ -79,7 +126,8 @@ export class CardDialogComponent implements OnInit {
      *  @params $event - The click event.
      */
     onSubmitForm() {
-        this.dialogRef.close(this.prepareCardData());
+        if (!!this.character) { this.dialogRef.close(this.prepareCharacterData()); }
+        if (!!this.skill) { this.dialogRef.close(this.prepareSkillData()); }
     }
 
     /**
@@ -87,8 +135,8 @@ export class CardDialogComponent implements OnInit {
      *  Resets and hides extra attack input.
      */
     onCancelExtraAttack() {
-        this.cardForm.get('hasExtraAttack').setValue(false);
-        this.cardForm.get('cardAttackExtra').setValue('');
+        this.characterForm.get('hasExtraAttack').setValue(false);
+        this.characterForm.get('characterExtraAttack').setValue('');
     }
 
     /**
@@ -101,7 +149,8 @@ export class CardDialogComponent implements OnInit {
 
         img.onload = () => {
             const picture = this.imageToDataUri(img);
-            this.character.setPicture(picture);
+            if (!!this.character) { this.character.setPicture(picture); }
+            if (!!this.skill) { this.skill.setPicture(picture); }
             this.imgPreview = picture;
         };
         img.src = URL.createObjectURL(event.target.files[0]);
@@ -145,19 +194,31 @@ export class CardDialogComponent implements OnInit {
 
     /**
      * @desc
-     *  Sets character name to current card.
+     *  Sets card name to current card.
      */
     onChangeCardName() {
-        this.character.setName(this.cardForm.controls.cardName.value);
+        if (!!this.character) { this.character.setName(this.characterForm.controls.characterName.value); }
+        if (!!this.skill) { this.skill.setName(this.skillForm.controls.skillName.value); }
     }
 
     /**
      * @desc
-     *  Sets character energy to current card.
+     *  Sets card energy to current card.
      */
     onChangeCardEnergy() {
-        this.character.setEnergy(this.cardForm.controls.cardEnergy.value);
-        this.character.setMaxEnergy(this.cardForm.controls.cardEnergy.value);
+        if (!!this.character) {
+            this.character.setEnergy(this.characterForm.controls.characterEnergy.value);
+            this.character.setMaxEnergy(this.characterForm.controls.characterEnergy.value);
+        }
+        if (!!this.skill) { this.skill.setEnergy(this.skillForm.controls.skillEnergy.value); }
+    }
+
+    /**
+     * @desc
+     *  Sets skill combo to current card.
+     */
+    onChangeCardCombo() {
+        if (!!this.skill) { this.skill.setCombo(this.skillForm.controls.skillCombo.value); }
     }
 
     /**
@@ -165,7 +226,8 @@ export class CardDialogComponent implements OnInit {
      *  Sets character energy to current card.
      */
     onChangeCardType() {
-        this.character.setType(this.cardForm.controls.cardType.value);
+        if (!!this.character) { this.character.setType(this.characterForm.controls.characterType.value); }
+        if (!!this.skill) { this.skill.setType(this.skillForm.controls.skillType.value); }
     }
 
     /**
@@ -175,7 +237,7 @@ export class CardDialogComponent implements OnInit {
      */
     onChangeCardAttack() {
         const attacks = [];
-        this.cardForm.controls.cardAttacks.value.forEach((input, i) => {
+        this.characterForm.controls.characterAttacks.value.forEach((input, i) => {
             const attack = new Attack(),
                 fn     = `attackDamage${i + 1}`;
             attack.setName(input.attack);
@@ -190,16 +252,16 @@ export class CardDialogComponent implements OnInit {
      *  Prepares character server data.
      * @returns {Object}
      */
-    prepareCardData() {
+    prepareCharacterData() {
 
-        const formControls  = this.cardForm.controls,
+        const formControls  = this.characterForm.controls,
             attacks         = this.character.attacks,
             bodyAttacks     = [];
 
         // Adds extra attack.
         if (formControls.hasExtraAttack.value) {
             const extraAttack = new Attack();
-            extraAttack.setName(formControls.cardAttackExtra.value);
+            extraAttack.setName(formControls.characterExtraAttack.value);
             extraAttack.setDamage(this.attackDamageExtra());
             attacks.push(extraAttack);
         }
@@ -219,8 +281,24 @@ export class CardDialogComponent implements OnInit {
             energy      : this.character.energy,
             maxEnergy   : this.character.maxEnergy,
             picture     : this.character.picture,
-            status      : this.cardStatus.alive,
+            status      : this.characterStatus.alive,
             attacks     : bodyAttacks
+        };
+    }
+
+    /**
+     * @desc
+     *  Prepares skill server data.
+     * @returns {Object}
+     */
+    prepareSkillData() {
+
+        return {
+            name        : this.skill.name,
+            type        : this.skill.type,
+            energy      : this.skill.energy,
+            maxEnergy   : this.skill.combo,
+            picture     : this.skill.picture
         };
     }
 
@@ -237,7 +315,7 @@ export class CardDialogComponent implements OnInit {
      * @returns {number}
      */
     attackDamage2() {
-        return this.cardForm.controls.cardEnergy.value * 0.08;
+        return this.characterForm.controls.characterEnergy.value * 0.08;
     }
 
     /**
@@ -262,40 +340,52 @@ export class CardDialogComponent implements OnInit {
      */
     ngOnInit() {
 
-        if (this.isCreating) {
+        if (!!this.character) {
+            if (this.isCreating) {
 
-            // Create
-            this.cardForm.reset({
-                cardType        : this.cardTypes.Z,
-                cardEnergy      : 1000,
-                hasExtraAttack  : false
-            });
-            this.imgPreview = '';
-        } else {
-            // Edit
-            this.cardForm.controls['cardName'].setValue(this.character.name);
-            this.cardForm.controls['cardType'].setValue(this.character.type);
-            this.cardForm.controls['cardEnergy'].setValue(this.character.energy);
-            this.cardForm.controls['cardAttacks']['controls'].forEach((validator, i) => {
-                validator.controls['attack'].setValue(this.character.attacks[i].name);
-            });
-            const hasExtraAttack = this.character.attacks.length > 3;
-            if (hasExtraAttack) {
-                this.cardForm.controls['hasExtraAttack'].setValue(hasExtraAttack);
-                this.cardForm.controls['cardAttackExtra'].setValue(this.character.attacks[3].name);
-            }
-            this.imgPreview = this.character.picture;
-        }
-
-        // Has extra attack subscriber.
-        this.cardForm.get('hasExtraAttack').valueChanges.subscribe((newValue) => {
-            if (newValue) {
-                this.cardForm.get('cardAttackExtra').enable();
+                // Create.
+                this.characterForm.reset({
+                    characterType        : this.characterTypes.Z,
+                    characterEnergy      : 1000,
+                    hasExtraAttack  : false
+                });
+                this.imgPreview = '';
             } else {
-                this.cardForm.get('cardAttackExtra').disable();
+
+                // Edit character.
+                this.characterForm.controls['characterName'].setValue(this.character.name);
+                this.characterForm.controls['characterType'].setValue(this.character.type);
+                this.characterForm.controls['characterEnergy'].setValue(this.character.energy);
+                this.characterForm.controls['characterAttacks']['controls'].forEach((validator, i) => {
+                    validator.controls['attack'].setValue(this.character.attacks[i].name);
+                });
+                const hasExtraAttack = this.character.attacks.length > 3;
+                if (hasExtraAttack) {
+                    this.characterForm.controls['hasExtraAttack'].setValue(hasExtraAttack);
+                    this.characterForm.controls['characterExtraAttack'].setValue(this.character.attacks[3].name);
+                }
+                this.imgPreview = this.character.picture;
             }
-        });
+
+            // Has extra attack subscriber.
+            this.characterForm.get('hasExtraAttack').valueChanges.subscribe((newValue) => {
+                if (newValue) {
+                    this.characterForm.get('characterExtraAttack').enable();
+                } else {
+                    this.characterForm.get('characterExtraAttack').disable();
+                }
+            });
+        } else if (!!this.skill) {
+
+            // Edit skill.
+            this.skillForm.controls['skillName'].setValue(this.skill.name);
+            this.skillForm.controls['skillType'].setValue(this.skill.type);
+            this.skillForm.controls['skillEnergy'].setValue(this.skill.energy);
+            this.skillForm.controls['skillCombo'].setValue(this.skill.combo);
+            this.imgPreview = this.skill.picture;
+        }
     }
 
-    constructor(public fb: FormBuilder, public dialogRef: MdDialogRef<any>) {}
+    constructor(public fb: FormBuilder, public dialogRef: MdDialogRef<any>,
+                private translateService: TranslateService) {}
 }

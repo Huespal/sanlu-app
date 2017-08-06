@@ -2,40 +2,71 @@
 
 import mongoose from 'mongoose';
 
-///////////
-// Cards //
-///////////
+///////////////
+// Character //
+///////////////
 
-let Card = mongoose.model('Card');
+let Character = mongoose.model('Character');
 
-// GET cards.
-exports.get_all_cards = (req, res) => {
-    Card.find({}, (err, card) => {manageOutput(res, err, card);});
+// GET characters.
+exports.get_all_characters = (req, res) => {
+    Character.find({}, (err, character) => {manageOutput(res, err, character);});
 };
 
-// POST card.
-exports.create_card = (req, res) => {
-    let new_card = new Card(req.body);
-    new_card.save((err, card) => {manageOutput(res, err, card);});
+// POST character.
+exports.create_character = (req, res) => {
+    let new_card = new Character(req.body);
+    new_card.save((err, character) => {manageOutput(res, err, character);});
 };
 
-// GET card.
-exports.get_card = (req, res) => {
-    Card.findById(req.params.id, (err, card) => {manageOutput(res, err, card);});
+// GET character.
+exports.get_character = (req, res) => {
+    Character.findById(req.params.id, (err, character) => {manageOutput(res, err, character);});
 };
 
-// PUT card.
-exports.modify_card = (req, res) => {
-    Card.findOneAndUpdate(
+// PUT character.
+exports.modify_character = (req, res) => {
+    Character.findOneAndUpdate(
         {_id: req.params.id},
         req.body,
         {new: true},
-        (err, card) => {manageOutput(res, err, card);});
+        (err, character) => {manageOutput(res, err, character);});
 };
 
-// DELETE card.
-exports.delete_card = (req, res) => {
-    Card.remove({_id: req.params.id}, (err, output) => {manageOutput(res, err, output);});
+// DELETE character.
+exports.delete_character = (req, res) => {
+    Character.remove({_id: req.params.id}, (err, output) => {manageOutput(res, err, output);});
+};
+
+/////////////
+// Skills  //
+/////////////
+
+let Skill = mongoose.model('Skill');
+
+// GET skills.
+exports.get_all_skills = (req, res) => {
+    Skill.find({}, (err, skill) => {manageOutput(res, err, skill);});
+};
+
+// POST skill.
+exports.create_skill = (req, res) => {
+    let new_skill = new Skill(req.body);
+    new_skill.save((err, skill) => {manageOutput(res, err, skill);});
+};
+
+// PUT skill.
+exports.modify_skill = (req, res) => {
+    Skill.findOneAndUpdate(
+        {_id: req.params.id},
+        req.body,
+        {new: true},
+        (err, skill) => {manageOutput(res, err, skill);});
+};
+
+// GET skill.
+exports.get_skill = (req, res) => {
+    Skill.findById(req.params.id, (err, skill) => {manageOutput(res, err, skill);});
 };
 
 /**

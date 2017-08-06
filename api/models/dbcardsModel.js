@@ -2,11 +2,11 @@
 
 import mongoose from 'mongoose';
 
-let Schema      = mongoose.Schema,
-    CardSchema  = new Schema({
+let Schema = mongoose.Schema,
+    CharacterSchema = new Schema({
         name: {
             type: String,
-            Required: 'Enter card name'
+            Required: 'Enter character name'
         },
         type: {
             type: Number,
@@ -15,19 +15,19 @@ let Schema      = mongoose.Schema,
         },
         picture: {
             type: String,
-            Required: 'Enter card picture url'
+            Required: 'Enter character picture base64'
         },
         energy: {
             type: Number,
-            Required: 'Enter card remaining energy'
+            Required: 'Enter character remaining energy'
         },
         max_energy: {
             type: Number,
-            Required: 'Enter card max energy'
+            Required: 'Enter character max energy'
         },
         attacks: {
             type: Array,
-            Required: 'Enter card attacks'
+            Required: 'Enter character attacks'
         },
         status: {
             type: Number,
@@ -38,6 +38,34 @@ let Schema      = mongoose.Schema,
             type: Date,
             default: Date.now
         }
-});
+    }),
+    SkillSchema = new Schema({
+        name: {
+            type: String,
+            Required: 'Enter skill name'
+        },
+        type: {
+            type: Number,
+            enum: [0, 1, 2, 3, 4, 5, 6, 7],
+            default: [0]
+        },
+        energy: {
+            type: Number,
+            Required: 'Enter skill energy'
+        },
+        combo: {
+            type: Number,
+            Required: 'Enter skill combo'
+        },
+        picture: {
+            type: String,
+            Required: 'Enter skill picture base64'
+        },
+        created_at: {
+            type: Date,
+            default: Date.now
+        }
+    });
 
-module.exports = mongoose.model('Card', CardSchema);
+module.exports = mongoose.model('Character', CharacterSchema);
+module.exports = mongoose.model('Skill', SkillSchema);

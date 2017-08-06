@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Character } from '../card/character';
+import { Skill } from '../card/skill';
 import { DbCardsService } from '../dbcards.service';
 import { CardDialogService } from '../cardDialog/cardDialog.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { cardTypes } from '../dbz-constants';
+import { characterTypes, skillTypes } from '../dbz-constants';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmService } from '../../confirm/confirm.service';
 import { Attack } from '../card/attack';
@@ -33,24 +34,45 @@ export class AdminComponent implements OnInit {
 
     /**
      * @desc
-     *  Card types.
+     *  Skills data.
+     * @type {Array}
+     */
+    skills: Skill[]     = [];
+
+    /**
+     * @desc
+     *  Character types.
      * @type {Object}
      */
-    cardTypes       = cardTypes;
+    characterTypes      = characterTypes;
+
+    /**
+     * @desc
+     *  Skill types.
+     * @type {Object}
+     */
+    skillTypes          = skillTypes;
 
     /**
      * @desc
      *  Current card data.
      * @type {Character}
      */
-    currentCard     = new Character(0, '', this.cardTypes.Z, 0, 0, '', 0, []);
+    currentCharacter    = new Character(0, '', this.characterTypes.Z, 0, 0, '', 0, []);
+
+    /**
+     * @desc
+     *  Current card data.
+     * @type {Character}
+     */
+    currentSkill        = new Skill(0, '', this.skillTypes.combo, 0, 0, '');
 
     /**
      * @desc
      *  Search form.
      * @type {FormGroup}
      */
-    searchForm      = this.fb.group({
+    searchForm          = this.fb.group({
         searchInput: ['', Validators.required]
     });
 
@@ -62,12 +84,15 @@ export class AdminComponent implements OnInit {
     onOpenCardDialog(isCreating) {
 
         this.cardDialogService
-            .open(this.currentCard, isCreating)
+            .open(this.currentCharacter, this.currentSkill, isCreating)
             .subscribe(data => {
 
                 if (data) {
-                    if (isCreating) {this.createCard(data);
-                    } else {this.editCard(this.currentCard.id, data); }
+                    if (isCreating) {this.createCharacter(data);
+                    } else {
+                        if (!!this.currentCharacter) { this.editCharacter(this.currentCharacter.id, data); }
+                        if (!!this.currentSkill) { this.editSkill(this.currentSkill.id, data); }
+                    }
                 }
             });
     }
@@ -94,8 +119,9 @@ export class AdminComponent implements OnInit {
      * @param {Object} e - The event object.
      */
     handleCardEvent(e) {
-        this.currentCard = e.character;
-        if (e.remove) {this.deleteCard();
+        this.currentCharacter = e.character;
+        this.currentSkill = e.skill;
+        if (e.remove) {this.deleteCharacter();
         } else { this.onOpenCardDialog(false); }
     }
 
@@ -105,7 +131,8 @@ export class AdminComponent implements OnInit {
      */
     getCards() {
 
-        this.dbcardsService.getCards()
+        // Gets characters.
+        this.dbcardsService.getCharacters()
             .then((r) => {
                 this.characters     = [];
                 this.charactersList = [];
@@ -124,6 +151,15 @@ export class AdminComponent implements OnInit {
                     this.characters.push(character);
                     this.charactersList.push(character);
                 });
+
+                // Gets skills.
+                return this.dbcardsService.getSkills();
+            })
+            .then((r) => {
+                this.skills = [];
+                r.forEach((item) => {
+                    this.skills.push(new Skill(item._id, item.name, item.type, item.energy, item.combo, item.picture));
+                });
             })
             .catch((err) => { console.error(err); });
     }
@@ -132,19 +168,29 @@ export class AdminComponent implements OnInit {
      * @desc
      *  Creates a card. Sends information to server to create a card.
      */
-    createCard(data) {
+    createCharacter(data) {
 
-        this.dbcardsService.createCard(data)
+        this.dbcardsService.createCharacter(data)
             .then(() => { this.getCards(); })
             .catch((err) => { console.error(err); });
     }
 
     /**
      * @desc
-     *  Edits a card. Sends information to server to edit a card.
+     *  Edits a character. Sends information to server to edit a card.
      */
-    editCard(cardId, data) {
-        this.dbcardsService.editCard(cardId, data)
+    editCharacter(cardId, data) {
+        this.dbcardsService.editCharacter(cardId, data)
+            .then(() => { this.getCards(); })
+            .catch((err) => { console.error(err); });
+    }
+
+    /**
+     * @desc
+     *  Edits an skill. Sends information to server to edit a card.
+     */
+    editSkill(cardId, data) {
+        this.dbcardsService.editSkill(cardId, data)
             .then(() => { this.getCards(); })
             .catch((err) => { console.error(err); });
     }
@@ -153,19 +199,19 @@ export class AdminComponent implements OnInit {
      * @desc
      *  Deletes card.
      */
-    deleteCard() {
+    deleteCharacter() {
         this.confirmService
             .confirm(this.translateService.instant('ADMIN.DELETE'),
-                this.translateService.instant('DIALOG.MSG_DELETE', {name: this.currentCard.name}),
+                this.translateService.instant('DIALOG.MSG_DELETE', {name: this.currentCharacter.name}),
                 this.translateService.instant('DIALOG.OK'))
             .subscribe(confirm => {
 
                 if (confirm) {
-                    this.dbcardsService.deleteCard(this.currentCard.id)
+                    this.dbcardsService.deleteCharacter(this.currentCharacter.id)
                         .then((r) => {
 
                             this.characters.forEach((x, i) => {
-                                if (x.id === this.currentCard.id) {
+                                if (x.id === this.currentCharacter.id) {
                                     this.characters.splice(i, 1);
                                 }
                             });

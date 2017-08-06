@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DbCardsService } from '../dbcards.service';
 import { Character } from './character';
-import { cardTypes } from '../dbz-constants';
+import { Skill } from './skill';
+import { characterTypes } from '../dbz-constants';
 
 @Component({
   selector: 'app-card',
@@ -16,6 +17,12 @@ export class CardComponent {
      *  Character information.
      */
     @Input() character: Character;
+
+    /**
+     * @desc
+     *  Skill information.
+     */
+    @Input() skill: Skill;
 
     /**
      * @desc
@@ -36,7 +43,7 @@ export class CardComponent {
      *  Card types.
      * @type {Object}
      */
-    cardTypes   = cardTypes;
+    cardTypes   = characterTypes;
 
     /**
      * @desc
@@ -52,7 +59,7 @@ export class CardComponent {
      *  Edits card.
      */
     onEdit() {
-        this.cardEvent.emit({character: this.character, remove: false});
+        this.cardEvent.emit({character: this.character, skill: this.skill, remove: false});
     }
 
     /**

@@ -7,4 +7,5 @@
          fxLayout="row"
          fxLayoutAlign="start start">
     <app-card *ngFor="let character of characters; index as i;" [character]="character" [isAdmin]="false" (cardEvent)="handleCardEvent($event)" class="card"></app-card>
+    <app-card *ngFor="let skill of skills; index as i;" [skill]="skill" [isAdmin]="false" class="card"></app-card>
 </div>

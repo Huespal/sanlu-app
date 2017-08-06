@@ -15,7 +15,14 @@ export class DbCardsComponent {
      *  Characters data.
      * @type {Array}
      */
-    characters = [];
+    characters  = [];
+
+    /**
+     * @desc
+     *  Skills data.
+     * @type {Array}
+     */
+    skills      = [];
 
     /**
      * @desc
@@ -31,8 +38,12 @@ export class DbCardsComponent {
      *  Gets all game cards.
      */
     getCards() {
-        this.dbcardsService.getCards()
-            .then((r) => { this.characters = r; })
+        this.dbcardsService.getCharacters()
+            .then((r) => {
+                this.characters = r;
+                return this.dbcardsService.getSkills();
+             })
+            .then((r) => { this.skills = r; })
             .catch((err) => { console.error(err); });
     }
 

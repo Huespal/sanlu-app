@@ -13,19 +13,31 @@
     "CHARACTER"   : "Personatge",
     "ATTACK_INFO" : "Fes click a un atac per activar-lo",
     "PLAY"        : "Jugar",
-    "MANAGE"      : "Administrar"
+    "MANAGE"      : "Administrar",
+    "SKILLS"      : {
+      "ENERGY"        : "Energia d'atac",
+      "COMBO"         : "Puny",
+      "BEAN"          : "Mongèta màgica",
+      "TRAIN"         : "Sala d'entrenament",
+      "SPECIAL"       : "Atac especial",
+      "DRAGON_BALLS"  : "Boles de drac",
+      "EARTH"         : "Terra",
+      "NAMEK"         : "Nàmek",
+      "UNIVERSE"      : "Univers"
+    }
   },
   "ADMIN"     : {
     "HEADER"      : "Cartes de Bola de Drac - Administrador",
     "NEW"         : "Nova carta",
     "CREATE"      : "Crear carta",
     "CHARACTERS"  : "Personatges",
-    "OTHERS"      : "Altres",
+    "SKILLS"      : "Habilitats",
     "NAME"        : "Nom",
     "PICTURE"     : "Imatge",
     "ENERGY"      : "Energia",
     "ATTACK"      : "Atac",
     "SERIES"      : "Sèrie",
+    "TYPE"        : "Tipus",
     "DB"          : "Bola de drac",
     "Z"           : "Bola de drac Z",
     "GT"          : "Bola de drac GT",
@@ -33,7 +45,7 @@
     "EDIT"        : "Editar carta",
     "DELETE"      : "Eliminar carta",
     "SEARCH"      : "Cercar carta",
-    "NO_CARDS"    : "No hi ha cartes. Prova a crear-ne una."
+    "NO_CARDS"    : "No hi ha cartes."
   },
   "DIALOG"    : {
     "MSG_DELETE"  : "Estàs segur/a que vols eliminar <strong>{{name}}</strong>",
