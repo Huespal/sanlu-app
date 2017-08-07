@@ -82,7 +82,7 @@ export class CardDialogComponent implements OnInit {
                 attack : ['', Validators.required],
             }),
             this.fb.group({
-                attack : ['', Validators.required],
+                attack : ['Combo', Validators.required],
             }),
             this.fb.group({
                 attack : ['', Validators.required],
@@ -347,7 +347,7 @@ export class CardDialogComponent implements OnInit {
                 this.characterForm.reset({
                     characterType        : this.characterTypes.Z,
                     characterEnergy      : 1000,
-                    hasExtraAttack  : false
+                    hasExtraAttack       : false
                 });
                 this.imgPreview = '';
             } else {

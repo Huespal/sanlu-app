@@ -10,26 +10,29 @@ $theme   : mat-dark-theme($primary, $accent, $warn);
 //$theme   : mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 
-body {
-    font-family: $mat-font-family;
-    font-weight: normal;
-    background: url('assets/img/bg/sanlu_bg_4.jpg') no-repeat center center fixed;
-    transition: background 300ms ease-in-out 200ms;
-    background-size: cover;
-    color: $black;
-    height: 90vh;
-    margin: 0;
-}
+html {
+    height: 100%;
+    body {
+        font-family: $mat-font-family;
+        font-weight: normal;
+        background: url('assets/img/bg/sanlu_bg_4.jpg') no-repeat center center fixed;
+        transition: background 300ms ease-in-out 200ms;
+        background-size: cover;
+        color: $black;
+        height: 100%;
+        margin: 0;
+    }
 
-h1, h2, h3, h4 {
-    font-weight: bold;
-}
+    h1, h2, h3, h4 {
+        font-weight: bold;
+    }
 
-$maxBg : 6;
+    $maxBg : 6;
 
-// Background classes
-@for $i from 1 through $maxBg {
-    .sanlu-bg-#{$i} {
-        background-image: url('/assets/img/bg/sanlu_bg_' + $i + '.jpg');
+    // Background classes
+    @for $i from 1 through $maxBg {
+        .sanlu-bg-#{$i} {
+            background-image: url('/assets/img/bg/sanlu_bg_' + $i + '.jpg');
+        }
     }
 }

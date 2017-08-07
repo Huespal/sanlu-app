@@ -83,6 +83,10 @@ export class AdminComponent implements OnInit {
      */
     onOpenCardDialog(isCreating) {
 
+        if (isCreating)  {
+            this.currentCharacter = new Character(0, '', this.characterTypes.Z, 0, 0, '', 0, []);
+            this.currentSkill     = null;
+        }
         this.cardDialogService
             .open(this.currentCharacter, this.currentSkill, isCreating)
             .subscribe(data => {

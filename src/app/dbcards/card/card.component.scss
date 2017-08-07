@@ -6,7 +6,6 @@ md-card {
   min-width: 200px;
   height: 328px;
   user-select: none;
-  cursor: default;
   .character-name {
     @extend .truncate;
     min-width: 60px;
@@ -42,19 +41,20 @@ md-card {
     }
   }
   .dbz-bg {
-    background: url('../../../assets/img/cards/common/card-bg-z.png') 50% no-repeat;
+    background: url('../../../assets/img/cards/card-bg-z.png') 50% no-repeat;
   }
   .dbgt-bg {
-    background: url('../../../assets/img/cards/common/card-bg-gt.png') 50% no-repeat;
+    background: url('../../../assets/img/cards/card-bg-gt.png') 50% no-repeat;
   }
   .db-bg {
-    background: url('../../../assets/img/cards/common/card-bg-db.png') 50% no-repeat;
+    background: url('../../../assets/img/cards/card-bg-db.png') 50% no-repeat;
   }
 }
 
 .selected {
   transform: scale(1.1);
   animation: blue-glow 1.5s ease-in-out infinite alternate;
+  z-index: 1;
 }
 
 .truncate {

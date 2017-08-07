@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MdSidenav } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { language } from './app-constants';
 
@@ -8,6 +9,8 @@ import { language } from './app-constants';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+    @ViewChild('sidenav') sidenav: MdSidenav;
 
     /**
      * @desc
@@ -55,17 +58,6 @@ export class AppComponent implements OnInit {
 
     /**
      * @desc
-     *  On init.
-     *  - Changes app background every interval time.
-     */
-    ngOnInit() {
-        setInterval(() => {
-            this.changeBg();
-        }, this.interval);
-    }
-
-    /**
-     * @desc
      *  Changes app background .
      */
     changeBg() {
@@ -74,6 +66,26 @@ export class AppComponent implements OnInit {
         this.bgNum += 1;
         if (this.bgNum === this.maxBgCount + 1) {this.bgNum = 1; }
         body.classList.add('sanlu-bg-' + this.bgNum );
+    }
+
+    /**
+     * @desc
+     *  Closes sidebar.
+     *  @params {Object} e - The event object.
+     */
+    handleMenuEvent(e) {
+        if (e.close) { this.sidenav.close(); }
+    }
+
+    /**
+     * @desc
+     *  On init.
+     *  - Changes app background every interval time.
+     */
+    ngOnInit() {
+        setInterval(() => {
+            this.changeBg();
+        }, this.interval);
     }
 
     constructor(public translate: TranslateService) {

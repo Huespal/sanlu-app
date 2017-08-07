@@ -1,8 +1,26 @@
 @import '../colors.scss';
 
-app-menu {
-  min-width: 200px;
+.mat-sidenav-container{
+  background-color: transparent;
+  height: 100%;
 }
-footer {
-  margin: 20px 0;
+
+.sidenav-open {
+  margin-bottom: -30px;
+  &:hover {
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.mat-sidenav {
+  background-color: $blue;
+  width: 200px;
+  form {
+    margin: 20px;
+    color: $white;
+  }
 }

@@ -1,17 +1,9 @@
-import { Component } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
-  animations: [
-      trigger('visibilityChanged', [
-          state('0', style({ transform: 'translateX(-100%)', height: '0', opacity: 0 })),
-          state('1', style({ transform: 'translateX(0%)', height: '100%', opacity: 1 })),
-          transition('1 => 0', animate('.3s ease-in' )),
-          transition('0 => 1', animate('.3s ease-out' ))
-  ])]
 })
 
 export class MenuComponent {
@@ -39,17 +31,17 @@ export class MenuComponent {
 
     /**
      * @desc
-     *  Flag to define open/close menu.
-     * @type {boolean}
+     *  Menu event.
+     *  - Close sidebar.
      */
-    openMenu = true;
+    @Output() menuEvent = new EventEmitter();
 
     /**
      * @desc
-     *  Opens / closes menu.
+     *  Event to close side nav.
      */
-    toggleMenu() {
-        this.openMenu = !this.openMenu;
+    onRoute() {
+        this.menuEvent.emit({close: true});
     }
 
     /**
@@ -68,7 +60,6 @@ export class MenuComponent {
      */
     onFace() {
         this.changeFace();
-        this.toggleMenu();
     }
 
     constructor() { }

@@ -7,9 +7,37 @@
 }
 
 .card {
-  padding: 20px;
+  margin: 5px 0 5px -200px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 button {
   color: $white;
+}
+
+//////////
+// GAME //
+//////////
+
+.deck {
+  width: 228px;
+  height: 356px;
+  border: 10px dashed $white-opacity;
+  text-align: right;
+}
+
+.card-back {
+  margin: 5px 0 5px -200px;
+  width: 246px;
+  height: 374px;
+  border: 1px solid $white-opacity;
+  background: url(../../assets/img/cards/card-back.jpg) 15px 125px $black no-repeat;
+  background-size: 215px;
+}
+
+.player-cards {
+  padding-left: 200px;
 }

@@ -51,5 +51,10 @@
     "MSG_DELETE"  : "Are you sure you want to delete <strong>{{name}}</strong>",
     "OK"          : "Ok",
     "CANCEL"      : "Cancel"
+  },
+  "FB"        : {
+    "ERROR" : {
+      "NOT_ENOUGH_CARDS"  : "Not enough cards to play. Needs more at least 1 skill card and 10 characters cards to play."
+    }
   }
 }

@@ -1,19 +1,22 @@
-<div class="flex-container"
-     fxLayout="row"
-     fxLayoutAlign="start start"
-     fxLayout.xs="column"
-     fxLayoutAlign.xs="start start">
-        <app-menu class="flex-item" fxFlex="15%"></app-menu>
-        <router-outlet class="right-element"></router-outlet>
-</div>
-<footer>
-    <form class="flex-container"
-          fxLayout="row"
-          fxLayoutAlign="end center">
-        <!-- Language -->
-        <md-select [(ngModel)]="currentLang" name="language" placeholder="{{ 'LANGUAGE' | translate }}" (change)="onChangeLanguage()">
+<md-sidenav-container>
+    <md-sidenav #sidenav>
+        <app-menu (menuEvent)="handleMenuEvent($event)"></app-menu>
+        <form>
+            <!-- Language -->
+            <md-select [(ngModel)]="currentLang" name="language" placeholder="{{ 'LANGUAGE' | translate }}" (change)="onChangeLanguage()">
                 <md-option [value]="lang.CA">{{ lang.CA | uppercase }}</md-option>
                 <md-option [value]="lang.EN">{{ lang.EN | uppercase }}</md-option>
-        </md-select>
-    </form>
-</footer>
+            </md-select>
+        </form>
+    </md-sidenav>
+
+    <div class="flex-container"
+         fxLayout="column"
+         fxLayoutAlign="center center">
+        <button class="sidenav-open" md-icon-button (click)="sidenav.open()">
+            <img src="./../favicon.ico"/>
+        </button>
+        <router-outlet class="right-element"></router-outlet>
+    </div>
+
+</md-sidenav-container>

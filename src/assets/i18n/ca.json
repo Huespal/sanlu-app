@@ -51,5 +51,10 @@
     "MSG_DELETE"  : "Estàs segur/a que vols eliminar <strong>{{name}}</strong>",
     "OK"          : "D'acord",
     "CANCEL"      : "Cancel·lar"
+  },
+  "FB"        : {
+    "ERROR" : {
+      "NOT_ENOUGH_CARDS"  : "No hi ha prou cartes. Són necessàries almenys 1 carta d'habilitat i 10 de personatge per jugar."
+    }
   }
 }

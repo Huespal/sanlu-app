@@ -4,8 +4,8 @@ import { RoutesModule } from './routes.module';
 import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCheckboxModule, MdListModule, MdInputModule,
-         MdSelectModule, MdIconModule, MdCardModule, MdDialogModule, MdTabsModule } from '@angular/material';
+import { MdButtonModule, MdCheckboxModule, MdListModule, MdInputModule, MdSnackBarModule,
+         MdSelectModule, MdIconModule, MdCardModule, MdDialogModule, MdTabsModule, MdSidenavModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -57,10 +57,12 @@ export function HttpLoaderFactory(http: Http) {
     MdListModule,
     MdCheckboxModule,
     MdInputModule,
+    MdSnackBarModule,
     MdSelectModule,
     MdIconModule,
     MdDialogModule,
     MdTabsModule,
+    MdSidenavModule,
     ReactiveFormsModule,
     FormsModule,
     HttpModule,

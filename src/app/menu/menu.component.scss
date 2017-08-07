@@ -2,8 +2,6 @@
 
 // Menú
 md-nav-list {
-  background-color: $white-opacity;
-  z-index: 0;
   md-list-item {
     color: $white;
   }
@@ -12,8 +10,6 @@ md-nav-list {
 // Menu rounded image
 .menu-img {
   padding: 5px;
-  background-color: $white-opacity;
-  z-index: 1;
   img {
     border-radius: 50%;
     border: 1px solid $black;

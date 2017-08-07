@@ -5,7 +5,8 @@ export const characterTypes = {
 };
 export const characterStatus = {
     alive   : 0,
-    dead    : 1
+    dead    : 1,
+    inGame  : 2
 };
 export const skillTypes = {
     energy      : 0,

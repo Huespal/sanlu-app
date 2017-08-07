@@ -1,20 +1,20 @@
 <div class="menu-img">
     <img src="../../assets/img/face/{{faceClass}}.jpg" (click)="onFace()"/>
 </div>
-<md-nav-list [@visibilityChanged]="openMenu">
-    <md-list-item [routerLink]="['/app/who']">
+<md-nav-list>
+    <md-list-item [routerLink]="['/app/who']" (click)="onRoute()">
         <span translate="MENU.WHO"></span>
     </md-list-item>
-    <md-list-item [routerLink]="['/app/what']">
+    <md-list-item [routerLink]="['/app/what']" (click)="onRoute()">
         <span translate="MENU.WHAT"></span>
     </md-list-item>
-    <md-list-item [routerLink]="['/app/why']">
+    <md-list-item [routerLink]="['/app/why']" (click)="onRoute()">
         <span translate="MENU.WHY"></span>
     </md-list-item>
-    <md-list-item [routerLink]="['/app/where']">
+    <md-list-item [routerLink]="['/app/where']" (click)="onRoute()">
         <span translate="MENU.WHERE"></span>
     </md-list-item>
-    <md-list-item [routerLink]="['/dbcards']">
+    <md-list-item [routerLink]="['/dbcards']" (click)="onRoute()">
         <span translate="MENU.DB_CARDS"></span>
     </md-list-item>
 </md-nav-list>

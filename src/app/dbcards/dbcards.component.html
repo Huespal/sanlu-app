@@ -1,11 +1,55 @@
-<h1 translate="DB_CARDS.HEADER"></h1>
+
+<h1 title="{{ 'DB_CARDS.HEADER' | translate }}"><img src="../../assets/img/bg/game-title.jpg"></h1>
 
 <button md-button (click)="onStart()">{{ 'DB_CARDS.PLAY' | translate }}</button>
 <button md-button [routerLink]="['/dbcards/admin']">{{ 'DB_CARDS.MANAGE' | translate }}</button>
 
-<div class="flex-container"
+<div>
+
+    <!-- Opponent cards -->
+    <div class="flex-container player-cards"
          fxLayout="row"
-         fxLayoutAlign="start start">
-    <app-card *ngFor="let character of characters; index as i;" [character]="character" [isAdmin]="false" (cardEvent)="handleCardEvent($event)" class="card"></app-card>
-    <app-card *ngFor="let skill of skills; index as i;" [skill]="skill" [isAdmin]="false" class="card"></app-card>
+         fxLayoutWrap
+         fxLayoutAlign="center start">
+        <div *ngFor="let card of (turn) ? player2Cards : player1Cards; index as i;" class="card-back"></div>
+    </div>
+
+    <!-- Game panel -->
+
+    <div class="flex-container"
+         fxLayout="column"
+         fxLayoutAlign="space-around start">
+
+        <!-- Opponent in game characters -->
+        <div class="flex-container"
+             fxLayout="row"
+             fxLayoutAlign="start start">
+            <ng-container *ngFor="let character of (turn) ? player1Cards : player2Cards; index as i;">
+                <app-card *ngIf="character.status === characterStatus.inGame" [character]="character" class="card"></app-card>
+            </ng-container>
+        </div>
+
+        <!-- Deck -->
+        <div class="deck"></div>
+
+        <!-- Active player in game characters -->
+        <div class="flex-container"
+             fxLayout="row"
+             fxLayoutAlign="center start">
+            <ng-container *ngFor="let character of activeCards; index as i;">
+                <app-card *ngIf="character.status === characterStatus.inGame" [character]="character" (cardEvent)="handleCardEvent($event)" class="card"></app-card>
+            </ng-container>
+        </div>
+    </div>
+
+    <!-- Active player cards -->
+    <div class="flex-container player-cards"
+         fxLayout="row"
+         fxLayoutWrap
+         fxLayoutAlign="center start">
+        <ng-container *ngFor="let card of activeCards; index as i;">
+            <app-card (click)="setInGame(card)" [character]="(!card.combo) ? card : null" [skill]="(!!card.combo) ? card : null" class="card cursor-pointer"></app-card>
+        </ng-container>
+    </div>
+
 </div>
