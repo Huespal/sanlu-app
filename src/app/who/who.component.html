@@ -1,1 +1,26 @@
-<p>Who</p>
+<h1 translate="WHO.HEADER"></h1>
+<p translate="WHO.INFO_1"></p>
+<p translate="WHO.INFO_2"></p>
+<p translate="WHO.INFO_3"></p>
+<p translate="WHO.INFO_4"></p>
+<p translate="WHO.INFO_5"></p>
+
+<form [formGroup]="whoForm"
+      (submit)="onSendWho()"
+      class="flex-container"
+      fxLayout="column"
+      fxLayoutAlign="start start">
+    <md-input-container>
+        <label for="who-input" translate="WHO.FORM_NAME"></label>
+        <input id="who-input" mdInput formControlName="whoName"/>
+    </md-input-container>
+    <label for="who-text-area" translate="WHO.FORM_TEXT"></label>
+    <md-input-container>
+        <textarea id="who-text-area" mdInput mdTextareaAutosize formControlName="whoText"></textarea>
+    </md-input-container>
+    <div class="flex-container form-actions"
+         fxLayout="row"
+         fxLayoutAlign="end end">
+        <button md-button [disabled]="!whoForm.valid"> <span translate="WHO.GREET"></span> </button>
+    </div>
+</form>

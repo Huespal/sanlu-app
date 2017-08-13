@@ -1,11 +1,27 @@
 {
   "LANGUAGE"  : "Language",
-  "MENU"  : {
-    "WHO"       : "Who I am?",
-    "WHAT"      : "What I do?",
-    "WHY"       : "Why I do?",
-    "WHERE"     : "Where I am?",
-    "DB_CARDS"  : "Dragon Ball Cards"
+  "WHO"       : {
+    "HEADER"  : "Who I am?",
+    "INFO_1"    : "It was a slightly warm evening. The temperature of that March was still nice. The sun, which had now disappeared, had been illuminating Barcelona from an early age. Even so, the state of the weather did not seem to matter at all. The one who probably is the most important person in my life was taking in that hospital bed more hours than I could remember. The only thing I wished was to finish once and return home with me when I was better. Wanted to see me Above all, I wanted to see my face for the first time. Looking at my eyes, hugging me, feeling out of his, in the world that she shared about twenty-eight years ago with the family, friends, several people in trust, and above all, he, The only one who understood it. He takes care of her with the sincerity and tenderness of those who will do it for a lifetime.",
+    "INFO_2"    : "I wept just the necessary. I ate the scheduled meals with the right amount of food. I walked and talked for the first time at the right moment. In short, I was a child of a manual. I have seen the pride that this gives them when, as a matter of fact, they reminded me. Everything I can remember about childhood is joy. It was a perfect childhood, only available to perform by the best parents.",
+    "INFO_3"    : "Then came adolescence and youth. While there have been important moments, they have never been as awesome as childhood. A person is the significant experiences that he experiences during life. I have enjoyed them in childhood. I have also lived some more recently, but none has managed to impose on those provided by my parents with such perfection during childhood.",
+    "INFO_4"    : "This part is incomplete because I am about twenty-five percent of what I will be. It may not reflect myself in the future. However, it is the fourth strongest part, the base, and paradoxically, now it defines me one hundred percent. I am extremely curious. I can be imperturbably obstinate on a topic if I believe in it. However, lately I do not believe in anything. Those who say that everything in life is important, they are wrong or they are comedians. Life is four important things, the rest as much as we want to see that it matters to us, in the end, it is completely non worth to us.",
+    "INFO_5"    : "That's me. And I am pleased to meet you. So tell me, who are you?",
+    "FORM_NAME" : "How are you called?",
+    "FORM_TEXT" : "Who are you?",
+    "GREET"     : "Greet"
+  },
+  "WHAT"       : {
+    "HEADER"  : "What I do?",
+    "INFO"    : "What?"
+  },
+  "WHY"       : {
+    "HEADER"  : "Why I do?",
+    "INFO"    : "Why"
+  },
+  "WHERE"       : {
+    "HEADER"  : "Where I am?",
+    "INFO"    : "Where"
   },
   "DB_CARDS"  : {
     "HEADER"      : "Dragon Ball cards game",
@@ -55,6 +71,9 @@
   "FB"        : {
     "ERROR" : {
       "NOT_ENOUGH_CARDS"  : "Not enough cards to play. Needs more at least 1 skill card and 10 characters cards to play."
+    },
+    "SUCCESS" : {
+      "SEND_GREET"  : "Thanks for sharing. Welcome to our site {{name}}."
     }
   }
 }

@@ -1,11 +1,27 @@
 {
   "LANGUAGE"  : "Idioma",
-  "MENU"      : {
-    "WHO"       : "Qui sóc?",
-    "WHAT"      : "Què faig?",
-    "WHY"       : "Perquè ho faig?",
-    "WHERE"     : "On sóc?",
-    "DB_CARDS"  : "Cartes Bola de drac"
+  "WHO"       : {
+    "HEADER"    : "Qui sóc?",
+    "INFO_1"    : "Era un vespre lleugerament càlid. La temperatura d'aquell vint de març es mantenia agradable encara. El Sol, que ara ja s'apagava, havia estat il·luminant Barcelona des de ben d'hora. Tot i així, l'estat del clima no semblava importar-li gens ni mica. La que probablement sigui la persona més important de la meva vida portava estirada en aquell llit d'hospital més hores de les que podia recordar. L'única cosa que desitjava era acabar d'una vegada i tornar cap a casa amb mi quan abans millor. Volia veure'm. Per sobre de tot desitjava veure el meu rostre per primer cop. Mirar-me als ulls, abraçar-me, sentir-me fora seu, en el món que ella compartia feia uns vint-i-vuit anys amb la família, els amics, vàries persones de confiança, i per sobre de tothom, ell, l'únic que l'entenia. La cuidava amb la sinceritat i la tendresa dels que ho faran per tota la vida.",
+    "INFO_2"    : "Vaig plorar lo just i necessari. Vaig fer els àpats que tocaven amb la quantitat adient. Vaig caminar i parlar per primer cop en el moment adequat. En definitiva, vaig ser un infant de manual. He vist l'orgull que ha això ha traspuat quan, ja de gran, m'ho recordaven. Tot el que puc recordar de la infància és goig. Va ser una infància perfecte, només a l'alçada dels millors pares.",
+    "INFO_3"    : "Després va venir l'adolescència i la joventut. Si bé hi ha hagut moments importants, mai han estat a l'alçada de la infància. Una persona és les experiències significatives que va patint durant la vida. Jo les he gaudit a la infància. També n'he viscut més recentment, però cap ha aconseguit imposar-se a les que em van saber brindar amb tanta perfecció els meus pares durant la infància.",
+    "INFO_4"    : "Aquesta part està incompleta degut a que sóc aproximadament un vint-i-cinc per cent del que seré. No pot no reflectir el meu jo futur. No obstant, és la quarta part més forta, la base, i paradoxalment, actualment em defineix al cent per cent. Sóc extremadament curiós. Puc ser imperturbablement obstinat en un tema si hi crec. Tot i així, últimament no crec en gairebé res. Els que pregonen que tot a la vida és important, s'equivoquen o són còmics. La vida són quatre coses importants, la resta per molt que vulguem fer veure que ens importa, en el fons, ens és completament igual.",
+    "INFO_5"    : "Així sóc jo. I estic encanta't de conèixer-te. Així que digues-me, qui ets tu?",
+    "FORM_NAME" : "Com t'anomenen?",
+    "FORM_TEXT" : "Qui ets?",
+    "GREET"     : "Saluda"
+  },
+  "WHAT"       : {
+    "HEADER"  : "Què faig?",
+    "INFO"    : "Què?"
+  },
+  "WHY"       : {
+    "HEADER"  : "Per què ho faig?",
+    "INFO"    : "Per què"
+  },
+  "WHERE"       : {
+    "HEADER"  : "On sóc?",
+    "INFO"    : "On"
   },
   "DB_CARDS"  : {
     "HEADER"      : "Joc de cartes de Bola de Drac",
@@ -55,6 +71,9 @@
   "FB"        : {
     "ERROR" : {
       "NOT_ENOUGH_CARDS"  : "No hi ha prou cartes. Són necessàries almenys 1 carta d'habilitat i 10 de personatge per jugar."
+    },
+    "SUCCESS" : {
+      "SEND_GREET"  : "Gràcies per compartir. Benvingut al nostre espai {{name}}."
     }
   }
 }

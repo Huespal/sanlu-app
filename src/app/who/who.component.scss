@@ -5,3 +5,22 @@
   padding: 10px;
   background-color: $white-opacity;
 }
+
+p {
+  text-align: justify;
+  line-height: 1.5em;
+}
+
+form {
+  width: 400px;
+  margin: 0 auto;
+  md-input-container {
+    margin: 20px 0;
+    textarea {
+      resize: none;
+    }
+  }
+  .form-actions {
+    width: 100%;
+  }
+}
