@@ -3,6 +3,23 @@
 import mongoose from 'mongoose';
 
 ///////////////
+//   Greet   //
+///////////////
+
+let Greet = mongoose.model('Greet');
+
+// GET greets.
+exports.get_all_greets = (req, res) => {
+    Greet.find({}, (err, greet) => {manageOutput(res, err, greet);});
+};
+
+// POST greet.
+exports.create_greet = (req, res) => {
+    let new_greet = new Greet(req.body);
+    new_greet.save((err, greet) => {manageOutput(res, err, greet);});
+};
+
+///////////////
 // Character //
 ///////////////
 

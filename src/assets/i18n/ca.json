@@ -61,7 +61,8 @@
     "EDIT"        : "Editar carta",
     "DELETE"      : "Eliminar carta",
     "SEARCH"      : "Cercar carta",
-    "NO_CARDS"    : "No hi ha cartes."
+    "NO_CARDS"    : "No hi ha cartes.",
+    "BACK"        : "Tornar"
   },
   "DIALOG"    : {
     "MSG_DELETE"  : "Estàs segur/a que vols eliminar <strong>{{name}}</strong>",

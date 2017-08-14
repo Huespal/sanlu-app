@@ -3,6 +3,12 @@
 let cards = require('../controllers/dbcardsController');
 
 module.exports = (app) => {
+    // GET greet.
+    // POST greet.
+    app.route('/api/greets')
+        .get(cards.get_all_greets)
+        .post(cards.create_greet);
+
     // GET characters.
     // POST character.
     app.route('/api/characters')

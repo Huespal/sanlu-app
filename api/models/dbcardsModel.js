@@ -3,6 +3,20 @@
 import mongoose from 'mongoose';
 
 let Schema = mongoose.Schema,
+    GreetSchema = new Schema({
+        name: {
+            type: String,
+            Required: 'Enter your name'
+        },
+        text: {
+            type: String,
+            Required: 'Enter greet text'
+        },
+        created_at: {
+            type: Date,
+            default: Date.now
+        }
+    }),
     CharacterSchema = new Schema({
         name: {
             type: String,
@@ -67,5 +81,6 @@ let Schema = mongoose.Schema,
         }
     });
 
+module.exports = mongoose.model('Greet', GreetSchema);
 module.exports = mongoose.model('Character', CharacterSchema);
 module.exports = mongoose.model('Skill', SkillSchema);

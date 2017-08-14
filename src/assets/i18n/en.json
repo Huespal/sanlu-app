@@ -61,7 +61,8 @@
     "EDIT"        : "Edit card",
     "DELETE"      : "Delete card",
     "SEARCH"      : "Search card",
-    "NO_CARDS"    : "There are no cards."
+    "NO_CARDS"    : "There are no cards.",
+    "BACK"        : "Go back"
   },
   "DIALOG"  : {
     "MSG_DELETE"  : "Are you sure you want to delete <strong>{{name}}</strong>",
